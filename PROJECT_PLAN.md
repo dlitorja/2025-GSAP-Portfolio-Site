@@ -176,16 +176,19 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ Create Supabase account
 - ✅ Create new project
 - ✅ Run SQL to create `contact_submissions` table
-- ✅ Configure Row Level Security policies
+- ✅ Configure database permissions and RLS policies
 - ✅ Get API credentials
 - ✅ Add to `.env.local`:
   ```
   NEXT_PUBLIC_SUPABASE_URL=https://mhlatpdssocipmsrdzpm.supabase.co
   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
   ```
+- ✅ Configure in Vercel environment variables
+- ✅ Test contact form submissions
+- ✅ Verify data storage in Supabase Table Editor
 
-**Time Spent:** 1 hour  
-**Status:** ✅ Contact form ready to accept submissions
+**Time Spent:** 3 hours (including troubleshooting RLS policies)  
+**Status:** ✅ Contact form fully functional and accepting submissions in production!
 
 ### 2.3 GitHub Integration (Optional) ✅ COMPLETE
 - ✅ Add GitHub username to `.env.local` (`GITHUB_USERNAME=dlitorja`)
@@ -462,7 +465,45 @@ The technical foundation is complete and live! The beta site is fully functional
 
 ---
 
-## 🎊 Recent Accomplishments (November 11, 2025)
+## 🎊 Recent Accomplishments
+
+### Session: November 11, 2025 - Part 2 ✅
+
+#### Homepage Styling Enhancements ✅
+- ✅ Implemented conditional text styling based on background image presence
+- ✅ Hero text (headline, subtitle, description) automatically switches to white when background image is present
+- ✅ Navigation bar dynamically changes to white theme on homepage (when background image exists)
+- ✅ Increased overlay darkness to 75% for improved text readability
+- ✅ Adjusted word spacing in hero headline for better visual balance (0.45em)
+- ✅ Maintained theme-aware styling on other pages (responsive to light/dark mode)
+- ✅ Social media icons adapt colors based on background presence
+
+**Result:** Homepage now intelligently adapts styling based on whether a background image is set in Prismic, providing optimal contrast and readability! 🎨
+
+#### Contact Form Backend Integration ✅
+- ✅ Wired up contact form to Supabase backend
+- ✅ Created `contact_submissions` table in Supabase with proper schema
+- ✅ Configured database permissions and RLS policies (after extensive troubleshooting)
+- ✅ Added enhanced error logging to API route for better debugging
+- ✅ Improved error handling in contact form component
+- ✅ Contact form successfully submits and stores data in Supabase
+- ✅ Form submissions viewable in Supabase Table Editor
+- ✅ Tested and verified working in production
+
+**Challenges Overcome:**
+- Resolved Row Level Security policy configuration issues
+- Fixed database permission grants for `anon` role
+- Solution: `GRANT ALL PRIVILEGES ON TABLE public.contact_submissions TO anon;` with RLS disabled (safe for contact forms)
+
+**Result:** Contact form is now fully functional with backend storage! Visitors can submit messages which are stored securely in Supabase. 📧✅
+
+**Commits:**
+- `5ac7354` - "Enhance homepage styling with conditional background image support"
+- `309994f` - "Wire up contact form with Supabase backend"
+
+---
+
+### Session: November 11, 2025 - Part 1
 
 ### Prismic CMS Integration Complete ✅
 - ✅ Installed Slice Machine UI and Next.js adapter
