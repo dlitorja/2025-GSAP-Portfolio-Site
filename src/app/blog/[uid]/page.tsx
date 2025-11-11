@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { ScrollReveal } from '@/components/scroll-reveal'
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react'
 
 interface BlogPostPageProps {
@@ -64,107 +65,119 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <div className="container mx-auto px-4 py-20">
       <article className="max-w-3xl mx-auto">
         {/* Back Button */}
-        <Button asChild variant="ghost" className="mb-8">
-          <Link href="/blog">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Blog
-          </Link>
-        </Button>
+        <ScrollReveal direction="fade">
+          <Button asChild variant="ghost" className="mb-8">
+            <Link href="/blog">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Blog
+            </Link>
+          </Button>
+        </ScrollReveal>
 
         {/* Post Header */}
-        <header className="mb-8">
-          {/* Tags */}
-          {data.tags && data.tags.length > 0 && (
-            <div className="flex gap-2 flex-wrap mb-4">
-              {data.tags.map((tagItem: any, idx: number) => (
-                <Badge key={idx} variant="secondary">
-                  {tagItem.tag}
-                </Badge>
-              ))}
-            </div>
-          )}
-
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">{data.title}</h1>
-
-          {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
-            {data.author && (
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                <span>{data.author}</span>
+        <ScrollReveal direction="up" delay={0.1}>
+          <header className="mb-12">
+            {/* Tags */}
+            {data.tags && data.tags.length > 0 && (
+              <div className="flex gap-2 flex-wrap mb-6">
+                {data.tags.map((tagItem: any, idx: number) => (
+                  <Badge key={idx} variant="secondary" className="text-sm">
+                    {tagItem.tag}
+                  </Badge>
+                ))}
               </div>
             )}
-            {data.publishDate && (
-              <>
-                <span>·</span>
+
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{data.title}</h1>
+
+            {/* Meta Information */}
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
+              {data.author && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <time>
-                    {new Date(data.publishDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </time>
+                  <User className="h-4 w-4" />
+                  <span>{data.author}</span>
                 </div>
-              </>
-            )}
-            <span>·</span>
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              <span>{readingTime} min read</span>
+              )}
+              {data.publishDate && (
+                <>
+                  <span>·</span>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <time>
+                      {new Date(data.publishDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </time>
+                  </div>
+                </>
+              )}
+              <span>·</span>
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                <span>{readingTime} min read</span>
+              </div>
             </div>
-          </div>
 
-          {/* Excerpt */}
-          {data.excerpt && (
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              {data.excerpt[0]?.text}
-            </p>
-          )}
-        </header>
+            {/* Excerpt */}
+            {data.excerpt && (
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                {data.excerpt[0]?.text}
+              </p>
+            )}
+          </header>
+        </ScrollReveal>
 
-        <Separator className="my-8" />
+        <Separator className="my-12" />
 
         {/* Featured Image */}
         {data.featuredImage?.url && (
-          <div className="mb-8 rounded-lg overflow-hidden">
-            <img
-              src={data.featuredImage.url}
-              alt={data.featuredImage.alt || data.title}
-              className="w-full h-auto"
-            />
-          </div>
+          <ScrollReveal direction="fade" delay={0.2}>
+            <div className="mb-12 rounded-lg overflow-hidden shadow-2xl ring-1 ring-border">
+              <img
+                src={data.featuredImage.url}
+                alt={data.featuredImage.alt || data.title}
+                className="w-full h-auto"
+              />
+            </div>
+          </ScrollReveal>
         )}
 
         {/* Video Embed */}
         {data.videoEmbed?.html && (
-          <Card className="p-4 mb-8">
-            <div
-              className="aspect-video"
-              dangerouslySetInnerHTML={{ __html: data.videoEmbed.html }}
-            />
-          </Card>
+          <ScrollReveal direction="fade" delay={0.2}>
+            <Card className="p-4 mb-12 shadow-lg">
+              <div
+                className="aspect-video rounded-lg overflow-hidden"
+                dangerouslySetInnerHTML={{ __html: data.videoEmbed.html }}
+              />
+            </Card>
+          </ScrollReveal>
         )}
 
         {/* Post Content */}
         {data.content && (
-          <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
-            <PrismicRichText field={data.content} />
-          </div>
+          <ScrollReveal direction="up" delay={0.1}>
+            <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
+              <PrismicRichText field={data.content} />
+            </div>
+          </ScrollReveal>
         )}
 
         <Separator className="my-12" />
 
         {/* Footer */}
-        <footer className="flex justify-between items-center">
-          <Button asChild variant="outline">
-            <Link href="/blog">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              All Posts
-            </Link>
-          </Button>
-        </footer>
+        <ScrollReveal direction="fade">
+          <footer className="flex justify-between items-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/blog">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                All Posts
+              </Link>
+            </Button>
+          </footer>
+        </ScrollReveal>
       </article>
     </div>
   )

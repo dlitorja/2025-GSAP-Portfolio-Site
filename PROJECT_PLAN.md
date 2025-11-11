@@ -1,7 +1,7 @@
 # Litorja Portfolio - Project Plan & Progress Tracker
 
-**Last Updated:** November 11, 2025  
-**Status:** 🚀 Beta Site Live at beta.litorja.com - Prismic CMS Integrated & Working
+**Last Updated:** December 2024  
+**Status:** 🚀 Beta Site Live at beta.litorja.com - Prismic CMS Integrated & Working - GSAP Animations Enhanced
 
 ---
 
@@ -476,4 +476,40 @@ The technical foundation is complete and live! The beta site is fully functional
 - ✅ Zero errors in build or deployment
 
 **Result:** Site content (hero, navigation, footer, SEO) is now editable through Prismic CMS without touching code! Changes publish in ~1 minute. 🚀
+
+### GSAP Animations & Page Enhancements ✅
+- ✅ Enhanced all pages (About, Projects, Blog, Contact) with GSAP scroll animations
+- ✅ Added ScrollReveal and ScrollStagger components for smooth scroll-triggered animations
+- ✅ Created page transition template (`src/app/template.tsx`) for smooth page transitions
+- ✅ Enhanced AnimatedHero with 3D text flip effects and magnetic buttons
+- ✅ Added navigation animations
+- ✅ Improved visual design with better spacing, shadows, and hover effects
+- ✅ Fixed About page headline to always display (matching other pages)
+- ✅ Updated Contact page layout (removed Location/Response Time, updated email, wider form)
+
+**Known Issues:**
+- ⚠️ **Animation Flash Issue (IN PROGRESS)**: When navigating between pages, especially TO the homepage, elements occasionally flash/disappear before animating in correctly. This appears to be a hydration/timing conflict between:
+  - Template page transitions (`src/app/template.tsx`)
+  - ScrollReveal component initial states (`src/components/scroll-reveal.tsx`)
+  - AnimatedHero component animations (`src/components/animated-hero.tsx`)
+  
+**Attempted Fixes:**
+- Added inline styles to ScrollReveal to prevent flash on initial render
+- Modified template to skip animations when navigating TO homepage
+- Used `immediateRender: false` in GSAP to respect inline styles
+- Added `requestAnimationFrame` delays for proper DOM readiness
+- Set hero container to always start with `opacity: 1`
+
+**Current Status:**
+- Issue persists intermittently, especially when navigating TO homepage from other pages
+- Elements flash visible, then disappear, then animate in correctly
+- May be related to Next.js hydration timing or GSAP/ScrollTrigger initialization order
+
+**Next Steps to Resolve:**
+- Investigate Next.js App Router hydration behavior with GSAP
+- Consider using CSS-based initial states instead of inline styles
+- May need to delay GSAP initialization until after hydration completes
+- Consider using `useLayoutEffect` instead of `useEffect` for initial state setting
+- Test with reduced motion preferences
+- Consider disabling template transitions entirely and relying only on ScrollReveal
 

@@ -24,8 +24,13 @@ export async function generateMetadata(): Promise<Metadata> {
   
   try {
     siteSettings = await client.getSingle('site_settings') as unknown as SiteSettingsDocument
-  } catch (error) {
-    console.error('Failed to fetch site settings for metadata:', error)
+  } catch (error: any) {
+    // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
+    const isNotFoundError = error?.name === 'NotFoundError' || 
+                           error?.message?.includes('No documents were returned')
+    if (!isNotFoundError) {
+      console.error('Failed to fetch site settings for metadata:', error)
+    }
   }
 
   // Fallback values
@@ -92,8 +97,13 @@ export default async function RootLayout({
   
   try {
     siteSettings = await client.getSingle('site_settings') as unknown as SiteSettingsDocument
-  } catch (error) {
-    console.error('Failed to fetch site settings:', error)
+  } catch (error: any) {
+    // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
+    const isNotFoundError = error?.name === 'NotFoundError' || 
+                           error?.message?.includes('No documents were returned')
+    if (!isNotFoundError) {
+      console.error('Failed to fetch site settings:', error)
+    }
   }
 
   const siteTitle = siteSettings?.data.site_title || 'Dustin Litorja'

@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { cn } from '@/lib/utils'
+import { gsap } from 'gsap'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -23,13 +24,52 @@ interface NavigationProps {
 export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
+  const logoRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    // Animate navigation on mount
+    if (navRef.current && logoRef.current) {
+      // Set initial state for logo
+      gsap.set(logoRef.current, { opacity: 0, x: -20 })
+      
+      // Animate logo in
+      gsap.to(logoRef.current, {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      })
+
+      // Get nav links excluding the logo
+      const navLinks = navRef.current.querySelectorAll('.nav-link')
+      if (navLinks.length > 0) {
+        // Set initial state for nav links
+        gsap.set(navLinks, { opacity: 0, y: -10 })
+        
+        // Animate nav links in
+        gsap.to(navLinks, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+          delay: 0.2,
+        })
+      }
+    }
+  }, [])
 
   return (
-    <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+    <nav ref={navRef} className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold">
+          <Link 
+            ref={logoRef}
+            href="/" 
+            className="text-xl font-bold hover:text-primary transition-colors"
+          >
             {siteTitle}
           </Link>
 
@@ -40,7 +80,7 @@ export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-sm font-medium transition-colors hover:text-primary',
+                  'nav-link text-sm font-medium transition-colors hover:text-primary',
                   pathname === item.href
                     ? 'text-foreground'
                     : 'text-muted-foreground'
