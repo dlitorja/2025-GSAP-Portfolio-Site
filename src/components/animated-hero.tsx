@@ -66,8 +66,12 @@ export function AnimatedHero({
         
         words.forEach((word, index) => {
           const span = document.createElement('span')
-          span.textContent = word + (index < words.length - 1 ? ' ' : '')
+          span.textContent = word
           span.style.display = 'inline-block'
+          // Add margin-right to preserve spacing between words (except for last word)
+          if (index < words.length - 1) {
+            span.style.marginRight = '0.35em'
+          }
           // Set initial state immediately to prevent flash
           span.style.opacity = '0'
           span.style.transform = 'translateY(60px) rotateX(90deg)'

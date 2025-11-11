@@ -19,6 +19,7 @@ export interface SiteSettingsDocument {
     instagram_url: prismic.LinkField
     footer_text: prismic.KeyTextField
     footer_tagline: prismic.KeyTextField
+    homepage_background_image: prismic.ImageField
   }
 }
 

@@ -49,6 +49,17 @@
           "placeholder_false": "Hidden",
           "placeholder_true": "Visible"
         }
+      },
+      "homepage_background_image": {
+        "type": "Image",
+        "config": {
+          "label": "Homepage Background Image",
+          "constraint": {
+            "width": 1920,
+            "height": 1080
+          },
+          "thumbnails": []
+        }
       }
     },
     "SEO": {
