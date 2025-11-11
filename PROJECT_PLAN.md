@@ -1,7 +1,7 @@
 # Litorja Portfolio - Project Plan & Progress Tracker
 
 **Last Updated:** November 11, 2025  
-**Status:** ✅ Implementation Complete - Ready for External Service Setup
+**Status:** 🚀 Beta Site Live at beta.litorja.com - Ready for Content Setup
 
 ---
 
@@ -21,8 +21,8 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 **Phase 1: Development** ✅ COMPLETE (100%)  
 **Phase 2: External Setup** ⏳ NEXT (0%)  
 **Phase 3: Content Migration** ⏳ PENDING (0%)  
-**Phase 4: Deployment** ⏳ PENDING (0%)  
-**Phase 5: Launch** ⏳ PENDING (0%)
+**Phase 4: Deployment** ✅ COMPLETE (100%)  
+**Phase 5: Launch** 🔄 PARTIAL - Beta Live (50%)
 
 ---
 
@@ -229,62 +229,69 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 
 ---
 
-## ⏳ Phase 4: Deployment (PENDING)
+## ✅ Phase 4: Deployment (COMPLETE)
 
-### 4.1 Pre-Deployment Testing ⏳
+### 4.1 Pre-Deployment Testing ✅
 **Documentation:** `DEPLOYMENT.md`, `QUICK_START_CHECKLIST.md`
 
-- [ ] Test all pages locally
-- [ ] Verify all links work
-- [ ] Test contact form submission
-- [ ] Check mobile responsiveness
-- [ ] Test dark mode toggle
-- [ ] Verify animations
-- [ ] Run production build: `npm run build`
+- ✅ Test all pages locally
+- ✅ Verify all links work
+- ✅ Test contact form submission (structure ready)
+- ✅ Check mobile responsiveness
+- ✅ Test dark mode toggle
+- ✅ Verify animations
+- ✅ Run production build: `npm run build`
 
-**Estimated Time:** 1-2 hours
+**Time Spent:** 1 hour
 
-### 4.2 Git Setup ⏳
-- [ ] Create GitHub repository
-- [ ] Initialize git: `git init`
-- [ ] Add remote repository
-- [ ] Commit and push code
+### 4.2 Git Setup ✅
+- ✅ Create GitHub repository (github.com/dlitorja/2025-GSAP-Portfolio-Site)
+- ✅ Initialize git in correct directory
+- ✅ Add remote repository
+- ✅ Commit and push code (61 files, 14,151 lines)
 
-**Estimated Time:** 15 minutes
+**Time Spent:** 30 minutes
 
-### 4.3 Vercel Deployment ⏳
-- [ ] Create Vercel account
-- [ ] Import project from GitHub
-- [ ] Configure environment variables in Vercel
-- [ ] Deploy
-- [ ] Test at Vercel URL
+### 4.3 Vercel Deployment ✅
+- ✅ Create Vercel account
+- ✅ Import project from GitHub
+- ✅ Configure environment variables placeholder (to be filled)
+- ✅ Deploy successfully
+- ✅ Test at Vercel URL (2025-gsap-portfolio-site.vercel.app)
 
-**Estimated Time:** 30 minutes - 1 hour
+**Time Spent:** 20 minutes
 
-### 4.4 Domain Configuration ⏳
-- [ ] Add custom domain in Vercel (litorja.com)
-- [ ] Update DNS records:
-  - [ ] A record to Vercel
-  - [ ] CNAME for www subdomain
-- [ ] Wait for SSL certificate
-- [ ] Verify site loads at custom domain
+### 4.4 Domain Configuration ✅
+- ✅ Add custom subdomain in Vercel (beta.litorja.com)
+- ✅ Update DNS records in Cloudflare:
+  - ✅ CNAME record for beta subdomain
+- ✅ SSL certificate provisioned automatically
+- ✅ Verify site loads at beta.litorja.com
 
-**Estimated Time:** 30 minutes (plus DNS propagation time)
+**Time Spent:** 15 minutes
 
 ---
 
-## ⏳ Phase 5: Launch & Post-Launch (PENDING)
+## 🔄 Phase 5: Launch & Post-Launch (PARTIAL - Beta Live)
 
-### 5.1 Final Testing ⏳
+### 5.1 Beta Launch ✅
+- ✅ Site deployed to Vercel
+- ✅ Beta subdomain configured (beta.litorja.com)
+- ✅ SSL certificate active
+- ✅ Site accessible and functional
+
+**Status:** Beta site is live and accessible at https://beta.litorja.com
+
+### 5.2 Final Testing ⏳ (After Content Added)
 - [ ] Test on multiple devices
 - [ ] Test in different browsers
 - [ ] Check all functionality works
 - [ ] Verify SEO tags
-- [ ] Test contact form on production
+- [ ] Test contact form on production (after Supabase setup)
 
 **Estimated Time:** 1-2 hours
 
-### 5.2 Monitoring Setup ⏳
+### 5.3 Monitoring Setup ⏳
 - [ ] Set up UptimeRobot
 - [ ] Configure Cloudflare Analytics (optional)
 - [ ] Submit sitemap to Google Search Console
@@ -292,11 +299,14 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 
 **Estimated Time:** 30 minutes - 1 hour
 
-### 5.3 Launch! 🚀
-- [ ] Update DNS to point to new site
+### 5.4 Full Launch! 🚀 (When Ready)
+- [ ] Move beta.litorja.com → litorja.com
+- [ ] Update DNS to point root domain to Vercel
 - [ ] Monitor for 24-48 hours
 - [ ] Cancel Carrd.co subscription
 - [ ] Announce new portfolio!
+
+**Status:** Waiting for content migration completion
 
 ---
 
@@ -362,14 +372,22 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ All features implemented
 - ✅ Comprehensive documentation
 - ✅ Build successful
-- ✅ Ready for deployment
+- ✅ Code pushed to GitHub (github.com/dlitorja/2025-GSAP-Portfolio-Site)
+- ✅ Deployed to Vercel
+- ✅ Beta site live at beta.litorja.com
+- ✅ SSL certificate active
+- ✅ Zero monthly costs achieved
+
+**Current Live Sites:**
+- 🔵 **beta.litorja.com** → New Next.js portfolio (LIVE)
+- 🟢 **litorja.com** → Carrd site (still active)
 
 **What's Next:**
 1. Set up Prismic account (1-2 hours)
 2. Set up Supabase project (30-60 minutes)
 3. Add content to Prismic (3-5 hours)
-4. Deploy to Vercel (30-60 minutes)
-5. Configure domain (30 minutes)
+4. Test and refine (1-2 hours)
+5. Full launch on litorja.com (30 minutes)
 
 **Estimated Total Remaining Time:** 6-10 hours
 
@@ -388,8 +406,10 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 ## ✅ Sign-Off
 
 **Development Phase:** COMPLETE ✅  
-**Ready for:** External service setup and deployment  
-**Next Action:** Follow `QUICK_START_CHECKLIST.md`
+**Deployment Phase:** COMPLETE ✅  
+**Beta Launch:** LIVE at beta.litorja.com 🚀  
+**Ready for:** Prismic & Supabase setup, then content migration  
+**Next Action:** Follow `PRISMIC_SETUP.md` to begin content setup
 
-The code is production-ready. All that remains is setting up the external services (Prismic, Supabase), adding your content, and deploying. The hard work is done! 🎉
+The technical foundation is complete and live! The beta site is accessible at **beta.litorja.com**. Next step is to set up Prismic CMS and Supabase, then migrate your content. You're almost there! 🎉
 
