@@ -19,14 +19,16 @@ const navItems = [
 
 interface NavigationProps {
   siteTitle?: string
+  hasHomepageBackground?: boolean
 }
 
-export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
+export function Navigation({ siteTitle = 'Dustin Litorja', hasHomepageBackground = false }: NavigationProps) {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLAnchorElement>(null)
   const isHomepage = pathname === '/'
+  const useWhiteTheme = isHomepage && hasHomepageBackground
 
   useEffect(() => {
     // Animate navigation on mount
@@ -64,7 +66,7 @@ export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
   return (
     <nav ref={navRef} className={cn(
       "border-b sticky top-0 z-50",
-      isHomepage 
+      useWhiteTheme 
         ? "border-white/10 bg-black/30 backdrop-blur supports-[backdrop-filter]:bg-black/30" 
         : "border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
     )}>
@@ -76,7 +78,7 @@ export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
             href="/" 
             className={cn(
               "text-xl font-bold transition-colors",
-              isHomepage ? "text-white hover:text-white/80" : "hover:text-primary"
+              useWhiteTheme ? "text-white hover:text-white/80" : "hover:text-primary"
             )}
           >
             {siteTitle}
@@ -90,7 +92,7 @@ export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
                 href={item.href}
                 className={cn(
                   'nav-link text-sm font-medium transition-colors',
-                  isHomepage
+                  useWhiteTheme
                     ? pathname === item.href
                       ? 'text-white hover:text-white/80'
                       : 'text-white/70 hover:text-white'
@@ -127,7 +129,7 @@ export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
         {mobileMenuOpen && (
           <div className={cn(
             "md:hidden py-4 border-t",
-            isHomepage ? "border-white/10" : "border-border"
+            useWhiteTheme ? "border-white/10" : "border-border"
           )}>
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
@@ -137,7 +139,7 @@ export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     'text-sm font-medium transition-colors px-2 py-1',
-                    isHomepage
+                    useWhiteTheme
                       ? pathname === item.href
                         ? 'text-white hover:text-white/80'
                         : 'text-white/70 hover:text-white'

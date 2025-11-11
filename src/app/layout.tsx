@@ -113,6 +113,7 @@ export default async function RootLayout({
   const linkedinUrl = (siteSettings?.data.linkedin_url && 'url' in siteSettings.data.linkedin_url) ? siteSettings.data.linkedin_url.url : ''
   const twitterUrl = (siteSettings?.data.twitter_url && 'url' in siteSettings.data.twitter_url) ? siteSettings.data.twitter_url.url : ''
   const instagramUrl = (siteSettings?.data.instagram_url && 'url' in siteSettings.data.instagram_url) ? siteSettings.data.instagram_url.url : ''
+  const hasHomepageBackground = !!siteSettings?.data.homepage_background_image?.url
   
   return (
     <html lang="en" suppressHydrationWarning>
@@ -125,7 +126,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation siteTitle={siteTitle} />
+          <Navigation siteTitle={siteTitle} hasHomepageBackground={hasHomepageBackground} />
           <main className="flex-1">{children}</main>
           <Footer 
             siteTitle={siteTitle}
