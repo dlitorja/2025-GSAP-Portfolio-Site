@@ -9,6 +9,7 @@ import { ArrowRight, Github, Linkedin, Twitter, Instagram } from 'lucide-react'
 
 interface AnimatedHeroProps {
   heroHeadline: string
+  heroSubtitle?: string
   heroDescription: string
   announcementBadge?: string
   showAnnouncement?: boolean
@@ -20,6 +21,7 @@ interface AnimatedHeroProps {
 
 export function AnimatedHero({
   heroHeadline,
+  heroSubtitle,
   heroDescription,
   announcementBadge,
   showAnnouncement = false,
@@ -31,7 +33,8 @@ export function AnimatedHero({
   const containerRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
-  const subtitleRef = useRef<HTMLParagraphElement>(null)
+  const subtitleLineRef = useRef<HTMLParagraphElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
   const buttonsRef = useRef<HTMLDivElement>(null)
   const socialsRef = useRef<HTMLDivElement>(null)
 
@@ -60,8 +63,21 @@ export function AnimatedHero({
           },
           showAnnouncement ? '-=0.3' : '0'
         )
-        .from(
-          subtitleRef.current,
+      
+      if (heroSubtitle && subtitleLineRef.current) {
+        tl.from(
+          subtitleLineRef.current,
+          {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+          },
+          '-=0.5'
+        )
+      }
+      
+      tl.from(
+          descriptionRef.current,
           {
             opacity: 0,
             y: 30,
@@ -111,9 +127,17 @@ export function AnimatedHero({
           >
             {heroHeadline}
           </h1>
+          {heroSubtitle && (
+            <p
+              ref={subtitleLineRef}
+              className="text-2xl md:text-3xl text-muted-foreground mt-4"
+            >
+              {heroSubtitle}
+            </p>
+          )}
           <p
-            ref={subtitleRef}
-            className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
+            ref={descriptionRef}
+            className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mt-6"
           >
             {heroDescription}
           </p>

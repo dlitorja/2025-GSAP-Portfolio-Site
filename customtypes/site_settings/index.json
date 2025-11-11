@@ -17,7 +17,14 @@
         "type": "Text",
         "config": {
           "label": "Hero Headline",
-          "placeholder": "e.g., Content Strategy | Marketing | Videography | Photography"
+          "placeholder": "e.g., Dustin Litorja"
+        }
+      },
+      "hero_subtitle": {
+        "type": "Text",
+        "config": {
+          "label": "Hero Subtitle",
+          "placeholder": "e.g., Content Strategy | Marketing | Ops | Videography | Photography"
         }
       },
       "hero_description": {

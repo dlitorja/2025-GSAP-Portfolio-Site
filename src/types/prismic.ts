@@ -5,6 +5,7 @@ export interface SiteSettingsDocument {
   data: {
     site_title: prismic.KeyTextField
     hero_headline: prismic.KeyTextField
+    hero_subtitle: prismic.KeyTextField
     hero_description: prismic.KeyTextField
     announcement_badge: prismic.KeyTextField
     show_announcement: prismic.BooleanField

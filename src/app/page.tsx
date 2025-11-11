@@ -18,8 +18,9 @@ export default async function Home() {
   }
 
   // Extract data with fallbacks
-  const heroHeadline = siteSettings?.data.hero_headline || 'Content Strategy | Marketing | Videography | Photography'
-  const heroDescription = siteSettings?.data.hero_description || "Welcome to Dustin Litorja's Portfolio"
+  const heroHeadline = siteSettings?.data.hero_headline || 'Dustin Litorja'
+  const heroSubtitle = siteSettings?.data.hero_subtitle || ''
+  const heroDescription = siteSettings?.data.hero_description || "I'm a marketing consultant who specializes in content strategy."
   const announcementBadge = siteSettings?.data.announcement_badge || ''
   const showAnnouncement = siteSettings?.data.show_announcement || false
   const githubUrl = (siteSettings?.data.github_url && 'url' in siteSettings.data.github_url) ? siteSettings.data.github_url.url : ''
@@ -31,6 +32,7 @@ export default async function Home() {
       {/* Hero Section with GSAP Animations */}
       <AnimatedHero 
         heroHeadline={heroHeadline}
+        heroSubtitle={heroSubtitle}
         heroDescription={heroDescription}
         announcementBadge={announcementBadge}
         showAnnouncement={showAnnouncement}
