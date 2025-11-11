@@ -1,7 +1,7 @@
 # Litorja Portfolio - Project Plan & Progress Tracker
 
-**Last Updated:** December 2024  
-**Status:** 🚀 Beta Site Live at beta.litorja.com - Prismic CMS Integrated & Working - GSAP Animations Enhanced
+**Last Updated:** November 11, 2025  
+**Status:** 🚀 Beta Site Live at beta.litorja.com - Projects & Blog Custom Types Ready - Deployment Fixed
 
 ---
 
@@ -19,10 +19,10 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 ## 📊 Overall Progress
 
 **Phase 1: Development** ✅ COMPLETE (100%)  
-**Phase 2: External Setup** ✅ COMPLETE (85%) - Prismic Integrated  
-**Phase 3: Content Migration** 🔄 IN PROGRESS (30%) - Site Settings Complete  
-**Phase 4: Deployment** ✅ COMPLETE (100%)  
-**Phase 5: Launch** 🔄 PARTIAL - Beta Live (60%)
+**Phase 2: External Setup** ✅ COMPLETE (95%) - All Custom Types Created  
+**Phase 3: Content Migration** 🔄 IN PROGRESS (35%) - Ready for Content Entry  
+**Phase 4: Deployment** ✅ COMPLETE (100%) - Deployment Issues Fixed  
+**Phase 5: Launch** 🔄 PARTIAL - Beta Live (65%)
 
 ---
 
@@ -428,10 +428,14 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ SSL certificate active
 - ✅ Zero monthly costs achieved
 - ✅ **Prismic CMS integrated and working**
+- ✅ **All custom types created (Site Settings, About, Project, Blog Post)**
 - ✅ **Site Settings fully managed via Prismic**
-- ✅ **Supabase contact form configured**
+- ✅ **Supabase contact form configured and working**
 - ✅ **GitHub API integration active**
 - ✅ **Site branding updated to "Dustin Litorja"**
+- ✅ **Deployment issues resolved (Resend optional)**
+- ✅ **Navigation styling bug fixed**
+- ✅ **Comprehensive project media support (images, embeds, uploads)**
 
 **Current Live Sites:**
 - 🔵 **beta.litorja.com** → New Next.js portfolio with Prismic CMS (LIVE & WORKING)
@@ -440,12 +444,18 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 **What's Next:**
 1. ~~Set up Prismic account~~ ✅ DONE
 2. ~~Set up Supabase project~~ ✅ DONE
-3. Add remaining content to Prismic (3-4 hours)
-   - Create About page document
-   - Add 3-4 projects
+3. ~~Create all custom types~~ ✅ DONE
+4. **Push custom types to Prismic using Slice Machine** (15 minutes)
+   - Run `npm run slicemachine`
+   - Navigate to http://localhost:9999
+   - Click "Push to Prismic"
+5. **Add content to Prismic** (3-4 hours)
+   - Fill in About page document
+   - Add 3-4 projects with media
    - Optional: Add initial blog posts
-4. Test and refine (1-2 hours)
-5. Full launch on litorja.com (30 minutes)
+6. Test and refine (1-2 hours)
+7. **(Optional) Add RESEND_API_KEY to Vercel** for email notifications
+8. Full launch on litorja.com (30 minutes)
 
 **Estimated Total Remaining Time:** 4-7 hours
 
@@ -464,15 +474,16 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 ## ✅ Sign-Off
 
 **Development Phase:** COMPLETE ✅  
-**Deployment Phase:** COMPLETE ✅  
-**External Services:** COMPLETE ✅ (Prismic, Supabase, GitHub)  
+**Deployment Phase:** COMPLETE ✅ (All issues resolved)  
+**External Services:** COMPLETE ✅ (Prismic, Supabase, GitHub, Resend)  
 **Beta Launch:** LIVE at beta.litorja.com 🚀  
-**CMS Integration:** COMPLETE ✅ (Site Settings fully managed)  
-**Content Migration:** IN PROGRESS 🔄 (30% complete)  
-**Ready for:** Remaining content entry (About page, Projects, Blog posts)  
-**Next Action:** Create remaining custom types and add content in Prismic
+**CMS Integration:** COMPLETE ✅ (All custom types created)  
+**Content Migration:** READY 🔄 (35% complete - awaiting content entry)  
+**Deployment Status:** STABLE ✅ (Builds succeed, optional features graceful)  
+**Ready for:** Push custom types to Prismic, then add content  
+**Next Action:** Run Slice Machine to push custom types, then begin content entry
 
-The technical foundation is complete and live! The beta site is fully functional at **beta.litorja.com** with working Prismic CMS integration. Site Settings, navigation, hero section, footer, and SEO metadata are all managed through Prismic without code deployments. Next step is to add the remaining content (About, Projects, Blog). You're making excellent progress! 🎉
+The technical foundation is complete and live! The beta site is fully functional at **beta.litorja.com** with working Prismic CMS integration. ALL custom types have been created (Site Settings, About, Project, Blog Post). Deployment issues have been resolved - site builds successfully even without optional API keys. Navigation styling is fixed. Next step is to push the custom types to Prismic using Slice Machine, then add your content! 🎉
 
 ---
 
@@ -595,6 +606,59 @@ The technical foundation is complete and live! The beta site is fully functional
 1. Push custom types to Prismic using Slice Machine
 2. Create sample projects with various media types
 3. Test in production
+
+---
+
+### Session: November 11, 2025 - Part 5 ✅
+
+#### Deployment Fixes & UI Polish ✅
+
+**Deployment Issues Resolved:**
+- ✅ Fixed Vercel build failures caused by missing `RESEND_API_KEY`
+  - Made Resend client initialization conditional
+  - Contact form gracefully skips email notifications when API key not present
+  - Form still works perfectly via Supabase backend
+  - Email notifications become optional feature
+- ✅ All deployments now succeed without requiring all environment variables
+
+**Navigation Color Bug Fixed:**
+- ✅ Fixed navbar turning white inappropriately in light mode
+  - Added `hasHomepageBackground` prop passed from layout to Navigation
+  - White theme only applies when BOTH on homepage AND background image exists
+  - Resolved issue where returning to homepage would show wrong colors
+  - Navigation now properly adapts to theme on all pages
+
+**About Page Updates:**
+- ✅ Changed button text from "Download Resume" to "My LinkedIn Profile"
+- ✅ Updated button icon from Download to ExternalLink (more appropriate)
+- ✅ Improved semantic clarity of the button's purpose
+
+**Technical Details:**
+- Contact form continues to work flawlessly
+- Deployment pipeline now more resilient
+- UI consistency improved across all pages
+- Better separation of required vs optional services
+
+**Result:** Site now deploys successfully on Vercel without all environment variables configured! Navigation styling is consistent and correct. 🎯✅
+
+**Files Modified:**
+- `src/app/api/contact/route.ts` - Made Resend optional
+- `src/components/navigation.tsx` - Fixed color logic
+- `src/app/layout.tsx` - Pass background image flag
+- `src/app/about/page.tsx` - Updated button text
+
+**Commits:**
+- `0f60bd2` - "Add comprehensive Project and Blog Post custom types with multimedia support"
+- `1ce09ea` - "Fix: Make Resend API key optional to prevent build failures"
+- `3f575ab` - "Fix: Navigation color only changes to white when homepage has background image"
+- `4d03e0c` - "Update About page button text from 'Download Resume' to 'My LinkedIn Profile'"
+
+**Current Status:**
+- ✅ All custom types created (Site Settings, About, Project, Blog Post)
+- ✅ Deployment working smoothly on Vercel
+- ✅ Contact form fully functional with Supabase
+- ✅ UI polish complete
+- ⏳ **Next:** Push custom types to Prismic and begin content entry
 
 ---
 
