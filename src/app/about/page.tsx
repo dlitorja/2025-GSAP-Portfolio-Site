@@ -149,7 +149,7 @@ export default async function AboutPage() {
                                   <CardTitle className="text-xl">{skill.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                  <p className="text-muted-foreground leading-relaxed">
+                                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
                                     {skill.description}
                                   </p>
                                 </CardContent>
