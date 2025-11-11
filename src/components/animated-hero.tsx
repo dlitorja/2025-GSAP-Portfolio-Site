@@ -18,6 +18,7 @@ interface AnimatedHeroProps {
   linkedinUrl?: string
   twitterUrl?: string
   instagramUrl?: string
+  hasBackgroundImage?: boolean
 }
 
 export function AnimatedHero({
@@ -30,6 +31,7 @@ export function AnimatedHero({
   linkedinUrl,
   twitterUrl,
   instagramUrl,
+  hasBackgroundImage = false,
 }: AnimatedHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
@@ -70,7 +72,7 @@ export function AnimatedHero({
           span.style.display = 'inline-block'
           // Add margin-right to preserve spacing between words (except for last word)
           if (index < words.length - 1) {
-            span.style.marginRight = '0.35em'
+            span.style.marginRight = '0.45em'
           }
           // Set initial state immediately to prevent flash
           span.style.opacity = '0'
@@ -244,7 +246,7 @@ export function AnimatedHero({
           )}
           <h1
             ref={titleRef}
-            className="text-5xl md:text-7xl font-bold tracking-tight"
+            className={`text-5xl md:text-7xl font-bold tracking-tight ${hasBackgroundImage ? 'text-white' : ''}`}
             style={{ opacity: 0 }}
           >
             {heroHeadline}
@@ -252,7 +254,7 @@ export function AnimatedHero({
           {heroSubtitle && (
             <p
               ref={subtitleLineRef}
-              className="text-2xl md:text-3xl text-muted-foreground mt-4"
+              className={`text-2xl md:text-3xl mt-4 ${hasBackgroundImage ? 'text-white/90' : 'text-foreground/80'}`}
               style={{ opacity: 0 }}
             >
               {heroSubtitle}
@@ -260,7 +262,7 @@ export function AnimatedHero({
           )}
           <p
             ref={descriptionRef}
-            className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mt-6 whitespace-pre-line"
+            className={`text-xl md:text-2xl max-w-2xl mx-auto mt-6 whitespace-pre-line ${hasBackgroundImage ? 'text-white/90' : 'text-foreground/80'}`}
             style={{ opacity: 0 }}
           >
             {heroDescription}
@@ -295,7 +297,7 @@ export function AnimatedHero({
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={hasBackgroundImage ? 'text-white/70 hover:text-white transition-colors' : 'text-muted-foreground hover:text-foreground transition-colors'}
               aria-label="GitHub"
             >
               <Github className="h-6 w-6" />
@@ -306,7 +308,7 @@ export function AnimatedHero({
               href={linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={hasBackgroundImage ? 'text-white/70 hover:text-white transition-colors' : 'text-muted-foreground hover:text-foreground transition-colors'}
               aria-label="LinkedIn"
             >
               <Linkedin className="h-6 w-6" />
@@ -317,7 +319,7 @@ export function AnimatedHero({
               href={twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={hasBackgroundImage ? 'text-white/70 hover:text-white transition-colors' : 'text-muted-foreground hover:text-foreground transition-colors'}
               aria-label="Twitter"
             >
               <Twitter className="h-6 w-6" />
@@ -328,7 +330,7 @@ export function AnimatedHero({
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={hasBackgroundImage ? 'text-white/70 hover:text-white transition-colors' : 'text-muted-foreground hover:text-foreground transition-colors'}
               aria-label="Instagram"
             >
               <Instagram className="h-6 w-6" />

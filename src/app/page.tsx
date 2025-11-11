@@ -50,7 +50,7 @@ export default async function Home() {
           }}
         >
           {/* Dark Overlay - adjustable opacity */}
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/75" />
         </div>
       )}
       
@@ -67,6 +67,7 @@ export default async function Home() {
           linkedinUrl={linkedinUrl}
           twitterUrl={twitterUrl}
           instagramUrl={instagramUrl}
+          hasBackgroundImage={!!homepageBackgroundImage}
         />
 
         {/* Featured Work Preview */}
