@@ -52,7 +52,9 @@ export function ContactForm() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to submit form')
+        const errorData = await response.json()
+        console.error('Server error:', errorData)
+        throw new Error(errorData.details || 'Failed to submit form')
       }
 
       setSubmitStatus('success')

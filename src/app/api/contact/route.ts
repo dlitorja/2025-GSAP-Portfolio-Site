@@ -32,8 +32,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Log the actual error message for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    console.error('Detailed error:', errorMessage)
+
     return NextResponse.json(
-      { error: 'Failed to submit contact form' },
+      { error: 'Failed to submit contact form', details: errorMessage },
       { status: 500 }
     )
   }
