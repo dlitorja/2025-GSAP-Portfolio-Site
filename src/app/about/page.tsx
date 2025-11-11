@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
-import { ExternalLink, Download, Briefcase, Code } from 'lucide-react'
+import { ExternalLink, Briefcase, Code } from 'lucide-react'
 import { AboutDocument } from '@/types/prismic'
 
 // Helper function to convert asterisk-prefixed lines to bullet points
@@ -156,8 +156,8 @@ export default async function AboutPage() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >
-                                  <Download className="mr-2 h-4 w-4" />
-                                  Download Resume
+                                  <ExternalLink className="mr-2 h-4 w-4" />
+                                  My LinkedIn Profile
                                 </a>
                               </Button>
                             </div>
