@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import React from 'react'
 import { createClient } from '@/lib/prismic'
 import { PrismicRichText } from '@prismicio/react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -7,6 +8,68 @@ import { Button } from '@/components/ui/button'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { ExternalLink, Download, Briefcase, Code } from 'lucide-react'
 import { AboutDocument } from '@/types/prismic'
+
+// Helper function to convert asterisk-prefixed lines to bullet points
+function formatTextWithBullets(text: string) {
+  if (!text) return null
+  
+  const lines = text.split('\n')
+  const elements: React.ReactNode[] = []
+  let currentList: string[] = []
+  let currentParagraph: string[] = []
+  
+  const flushParagraph = () => {
+    if (currentParagraph.length > 0) {
+      elements.push(
+        <p key={`para-${elements.length}`} className="mb-2">
+          {currentParagraph.join('\n')}
+        </p>
+      )
+      currentParagraph = []
+    }
+  }
+  
+  const flushList = () => {
+    if (currentList.length > 0) {
+      elements.push(
+        <ul key={`list-${elements.length}`} className="list-disc list-inside mb-2 space-y-1 ml-4">
+          {currentList.map((item, idx) => (
+            <li key={idx} className="text-muted-foreground">
+              {item.trim()}
+            </li>
+          ))}
+        </ul>
+      )
+      currentList = []
+    }
+  }
+  
+  lines.forEach((line) => {
+    const trimmedLine = line.trim()
+    
+    // Check if line starts with * or - (bullet point)
+    if (trimmedLine.match(/^[\*\-\•]\s+/)) {
+      flushParagraph()
+      // Remove the bullet marker and add to list
+      const listItem = trimmedLine.replace(/^[\*\-\•]\s+/, '')
+      currentList.push(listItem)
+    } else if (trimmedLine === '') {
+      // Empty line - flush both paragraph and list
+      flushParagraph()
+      flushList()
+    } else {
+      // Regular text line
+      flushList()
+      currentParagraph.push(line)
+    }
+  })
+  
+  // Flush any remaining content
+  flushParagraph()
+  flushList()
+  
+  return elements.length > 0 ? <div>{elements}</div> : null
+}
 
 export const metadata: Metadata = {
   title: 'About',
@@ -149,9 +212,9 @@ export default async function AboutPage() {
                                   <CardTitle className="text-xl">{skill.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                                    {skill.description}
-                                  </p>
+                                  <div className="text-muted-foreground leading-relaxed">
+                                    {formatTextWithBullets(skill.description || '')}
+                                  </div>
                                 </CardContent>
                               </Card>
                             ))}
