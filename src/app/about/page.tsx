@@ -32,19 +32,10 @@ export default async function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-20">
       <div className="max-w-4xl mx-auto">
-        {/* Page Header */}
-        <ScrollReveal direction="fade" delay={0.1}>
-          <div className="mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About</h1>
-            <p className="text-xl text-muted-foreground">
-              Learn more about me, my skills, and experience
-            </p>
-          </div>
-        </ScrollReveal>
-
         {!about ? (
           <ScrollReveal direction="fade">
             <div className="text-center py-20">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">About</h1>
               <p className="text-lg text-muted-foreground mb-4">
                 About page content not found. Set up your About page in Prismic.
               </p>
