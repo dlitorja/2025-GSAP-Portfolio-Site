@@ -1,0 +1,206 @@
+{
+  "id": "project",
+  "label": "Project",
+  "format": "custom",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID",
+          "placeholder": "unique-project-slug"
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": "Project name"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Description",
+          "placeholder": "Brief project description (1-2 paragraphs)",
+          "allowTargetBlank": true,
+          "multi": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "featuredImage": {
+        "type": "Image",
+        "config": {
+          "label": "Featured Image",
+          "constraint": {
+            "width": 1200,
+            "height": 675
+          },
+          "thumbnails": [
+            {
+              "name": "large",
+              "width": 1200,
+              "height": 675
+            },
+            {
+              "name": "medium",
+              "width": 800,
+              "height": 450
+            },
+            {
+              "name": "small",
+              "width": 400,
+              "height": 225
+            }
+          ]
+        }
+      },
+      "date": {
+        "type": "Date",
+        "config": {
+          "label": "Project Date",
+          "placeholder": "When this project was completed"
+        }
+      }
+    },
+    "Links": {
+      "projectLink": {
+        "type": "Link",
+        "config": {
+          "label": "Live Project URL",
+          "placeholder": "https://example.com",
+          "select": null
+        }
+      },
+      "githubLink": {
+        "type": "Link",
+        "config": {
+          "label": "GitHub Repository URL",
+          "placeholder": "https://github.com/username/repo",
+          "select": null
+        }
+      }
+    },
+    "Technologies": {
+      "technologies": {
+        "type": "Group",
+        "config": {
+          "label": "Technologies Used",
+          "fields": {
+            "name": {
+              "type": "Text",
+              "config": {
+                "label": "Technology Name",
+                "placeholder": "e.g., React, Next.js, TypeScript"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Media": {
+      "gallery": {
+        "type": "Group",
+        "config": {
+          "label": "Image Gallery",
+          "fields": {
+            "image": {
+              "type": "Image",
+              "config": {
+                "label": "Gallery Image",
+                "constraint": {
+                  "width": 1200,
+                  "height": 800
+                },
+                "thumbnails": []
+              }
+            },
+            "caption": {
+              "type": "Text",
+              "config": {
+                "label": "Image Caption (Optional)",
+                "placeholder": "Describe this image"
+              }
+            }
+          }
+        }
+      },
+      "videoEmbed": {
+        "type": "Embed",
+        "config": {
+          "label": "Video Embed (YouTube/Vimeo)",
+          "placeholder": "Paste YouTube or Vimeo URL here"
+        }
+      },
+      "videoFile": {
+        "type": "Link",
+        "config": {
+          "label": "Uploaded Video File",
+          "placeholder": "Upload a video file (MP4, MOV, etc.)",
+          "select": "media"
+        }
+      },
+      "additionalVideos": {
+        "type": "Group",
+        "config": {
+          "label": "Additional Videos",
+          "fields": {
+            "videoType": {
+              "type": "Select",
+              "config": {
+                "label": "Video Type",
+                "placeholder": "Choose video type",
+                "options": [
+                  "Embed (YouTube/Vimeo)",
+                  "Uploaded File"
+                ]
+              }
+            },
+            "videoEmbed": {
+              "type": "Embed",
+              "config": {
+                "label": "Video Embed URL",
+                "placeholder": "YouTube or Vimeo URL (if using embed)"
+              }
+            },
+            "videoFile": {
+              "type": "Link",
+              "config": {
+                "label": "Video File",
+                "placeholder": "Upload video file (if using upload)",
+                "select": "media"
+              }
+            },
+            "videoTitle": {
+              "type": "Text",
+              "config": {
+                "label": "Video Title (Optional)",
+                "placeholder": "Name of this video"
+              }
+            },
+            "videoDescription": {
+              "type": "Text",
+              "config": {
+                "label": "Video Description (Optional)",
+                "placeholder": "Brief description of this video"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Content": {
+      "content": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Project Details",
+          "placeholder": "Full project description, process, challenges, outcomes...",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      }
+    }
+  }
+}
+

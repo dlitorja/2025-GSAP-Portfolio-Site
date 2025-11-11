@@ -145,10 +145,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {data.videoEmbed?.html && (
           <ScrollReveal direction="fade" delay={0.2}>
             <Card className="p-4 mb-12 shadow-lg">
+              <h2 className="text-2xl font-bold mb-4">Project Video</h2>
               <div
                 className="aspect-video rounded-lg overflow-hidden"
                 dangerouslySetInnerHTML={{ __html: data.videoEmbed.html }}
               />
+            </Card>
+          </ScrollReveal>
+        )}
+
+        {/* Uploaded Video File */}
+        {data.videoFile && 'url' in data.videoFile && data.videoFile.url && (
+          <ScrollReveal direction="fade" delay={0.2}>
+            <Card className="p-4 mb-12 shadow-lg">
+              <h2 className="text-2xl font-bold mb-4">Project Video</h2>
+              <video
+                className="w-full aspect-video rounded-lg"
+                controls
+                preload="metadata"
+              >
+                <source src={data.videoFile.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </Card>
           </ScrollReveal>
         )}
@@ -165,11 +183,57 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       <div key={idx} className="rounded-lg overflow-hidden shadow-lg ring-1 ring-border hover:shadow-xl transition-shadow duration-300">
                         <img
                           src={item.image.url}
-                          alt={item.image.alt || `Gallery image ${idx + 1}`}
+                          alt={item.image.alt || item.caption || `Gallery image ${idx + 1}`}
                           className="w-full h-auto"
                         />
+                        {item.caption && (
+                          <div className="p-4 bg-muted">
+                            <p className="text-sm text-muted-foreground">{item.caption}</p>
+                          </div>
+                        )}
                       </div>
                     )
+                  ))}
+                </div>
+              </ScrollStagger>
+            </div>
+          </ScrollReveal>
+        )}
+
+        {/* Additional Videos */}
+        {data.additionalVideos && data.additionalVideos.length > 0 && (
+          <ScrollReveal direction="up" delay={0.1}>
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold mb-6">Additional Videos</h2>
+              <ScrollStagger staggerDelay={0.1}>
+                <div className="space-y-6">
+                  {data.additionalVideos.map((video: any, idx: number) => (
+                    <Card key={idx} className="p-4 shadow-lg">
+                      {video.videoTitle && (
+                        <h3 className="text-xl font-semibold mb-2">{video.videoTitle}</h3>
+                      )}
+                      {video.videoDescription && (
+                        <p className="text-muted-foreground mb-4">{video.videoDescription}</p>
+                      )}
+                      {/* Embedded Video */}
+                      {video.videoEmbed?.html && (
+                        <div
+                          className="aspect-video rounded-lg overflow-hidden"
+                          dangerouslySetInnerHTML={{ __html: video.videoEmbed.html }}
+                        />
+                      )}
+                      {/* Uploaded Video File */}
+                      {video.videoFile && 'url' in video.videoFile && video.videoFile.url && (
+                        <video
+                          className="w-full aspect-video rounded-lg"
+                          controls
+                          preload="metadata"
+                        >
+                          <source src={video.videoFile.url} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      )}
+                    </Card>
                   ))}
                 </div>
               </ScrollStagger>

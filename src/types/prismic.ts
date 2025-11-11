@@ -32,6 +32,7 @@ export interface ProjectDocument {
     featuredImage: prismic.ImageField
     gallery: Array<{
       image: prismic.ImageField
+      caption?: prismic.KeyTextField
     }>
     technologies: Array<{
       name: prismic.KeyTextField
@@ -40,6 +41,14 @@ export interface ProjectDocument {
     githubLink: prismic.LinkField
     date: prismic.DateField
     videoEmbed: prismic.EmbedField
+    videoFile: prismic.LinkField
+    additionalVideos: Array<{
+      videoType?: prismic.SelectField
+      videoEmbed?: prismic.EmbedField
+      videoFile?: prismic.LinkField
+      videoTitle?: prismic.KeyTextField
+      videoDescription?: prismic.KeyTextField
+    }>
     content: prismic.RichTextField
   }
 }

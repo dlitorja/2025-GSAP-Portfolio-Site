@@ -123,6 +123,7 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ README.md - Project overview
 - ✅ PRISMIC_SETUP.md - Prismic configuration guide
 - ✅ PRISMIC_SITE_SETTINGS_GUIDE.md - Site Settings CMS guide
+- ✅ PRISMIC_PROJECTS_GUIDE.md - Projects with media guide
 - ✅ IMPLEMENTATION_SUMMARY.md - Prismic integration details
 - ✅ SUPABASE_SETUP.md - Supabase setup guide
 - ✅ DEPLOYMENT.md - Deployment instructions
@@ -154,9 +155,19 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
     - Social media links (GitHub, LinkedIn, Twitter, Instagram)
     - Footer content
     - Optional announcement badge
-  - [ ] Project type (Pending)
-  - [ ] Blog Post type (Pending)
-  - [ ] About type (Pending)
+  - ✅ **Project type (Repeatable Type)** - CREATED & READY
+    - Title, description, featured image, date
+    - Image gallery with captions
+    - Video embeds (YouTube/Vimeo)
+    - Direct video file uploads
+    - Additional videos section
+    - Technologies used, project links
+  - ✅ **Blog Post type (Repeatable Type)** - CREATED & READY
+    - Title, excerpt, featured image
+    - Author, publish date, tags
+    - Rich content with embeds
+    - Video embed support
+  - ✅ **About type (Single Type)** - CREATED (Existing)
 - ✅ Get API credentials
 - ✅ Add to `.env.local`:
   ```
@@ -542,6 +553,48 @@ The technical foundation is complete and live! The beta site is fully functional
 
 **Commits:**
 - `6fca508` - "Add email notifications to contact form via Resend"
+
+---
+
+### Session: November 11, 2025 - Part 4 ✅
+
+#### Projects & Blog Custom Types Created ✅
+- ✅ Created comprehensive **Project** custom type with advanced media support
+  - Image gallery with optional captions
+  - Video embed support (YouTube/Vimeo)
+  - Direct video file uploads (MP4, MOV, WebM)
+  - Additional videos section with titles and descriptions
+  - Technologies badges, project links (live site + GitHub)
+- ✅ Created **Blog Post** custom type
+  - Title, excerpt, featured image
+  - Author, publish date, tags
+  - Rich text content with embeds
+  - Video embed support
+- ✅ Enhanced project detail page to display all media types
+  - Uploaded video files with HTML5 video player
+  - Multiple videos with captions
+  - Gallery with image captions
+- ✅ Updated TypeScript types for new fields
+- ✅ Created comprehensive documentation (`PRISMIC_PROJECTS_GUIDE.md`)
+  - How to create projects
+  - When to use embeds vs uploads
+  - Video optimization tips
+  - Best practices and troubleshooting
+
+**Result:** Projects now support complete multimedia portfolios with images, embedded videos, and uploaded video files! Ready for content creation. 🎬📸
+
+**Files Modified:**
+- `customtypes/project/index.json` - New custom type
+- `customtypes/blog_post/index.json` - New custom type
+- `src/app/projects/[uid]/page.tsx` - Enhanced media display
+- `src/types/prismic.ts` - Updated TypeScript types
+- `PRISMIC_PROJECTS_GUIDE.md` - New comprehensive guide
+- `PROJECT_PLAN.md` - Updated progress
+
+**Next Steps:**
+1. Push custom types to Prismic using Slice Machine
+2. Create sample projects with various media types
+3. Test in production
 
 ---
 
