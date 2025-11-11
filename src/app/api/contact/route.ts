@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { submitContactForm } from '@/lib/supabase'
 import { z } from 'zod'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
   name: z.string().min(2).max(50),
@@ -17,6 +20,27 @@ export async function POST(request: NextRequest) {
 
     // Submit to Supabase
     await submitContactForm(validatedData)
+
+    // Send email notification via Resend
+    try {
+      await resend.emails.send({
+        from: 'Portfolio Contact Form <onboarding@resend.dev>', // You can customize this later with your domain
+        to: 'dustin@litorja.com', // Your email address
+        subject: `New Contact Form Submission from ${validatedData.name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>From:</strong> ${validatedData.name}</p>
+          <p><strong>Email:</strong> ${validatedData.email}</p>
+          <p><strong>Message:</strong></p>
+          <p>${validatedData.message.replace(/\n/g, '<br>')}</p>
+          <hr>
+          <p style="color: #666; font-size: 12px;">Submitted via litorja.com contact form</p>
+        `,
+      })
+    } catch (emailError) {
+      // Log email error but don't fail the request
+      console.error('Failed to send email notification:', emailError)
+    }
 
     return NextResponse.json(
       { message: 'Contact form submitted successfully' },
