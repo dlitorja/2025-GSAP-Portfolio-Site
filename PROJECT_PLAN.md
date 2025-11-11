@@ -500,6 +500,48 @@ The technical foundation is complete and live! The beta site is fully functional
 **Commits:**
 - `5ac7354` - "Enhance homepage styling with conditional background image support"
 - `309994f` - "Wire up contact form with Supabase backend"
+- `21a5d6e` - "Update PROJECT_PLAN.md with session progress"
+
+---
+
+### Session: November 11, 2025 - Part 3 🔄
+
+#### Email Notifications via Resend 🔄 IN PROGRESS
+- ✅ Signed up for Resend (free tier: 3,000 emails/month)
+- ✅ Verified domain (litorja.com) with Resend via Cloudflare DNS
+- ✅ Installed Resend SDK (`npm install resend`)
+- ✅ Integrated Resend API into contact form route
+- ✅ Configured email notifications with HTML formatting
+- ✅ Added `RESEND_API_KEY` to `.env.local`
+- ✅ Implemented graceful error handling (form succeeds even if email fails)
+- ⏳ **Pending:** Testing blocked by Zoho Mail 2FA access issue
+- ⏳ **Pending:** Add `RESEND_API_KEY` to Vercel environment variables
+- ⏳ **Pending:** Test in production once email access restored
+
+**Email Configuration:**
+- **From:** `Portfolio Contact Form <onboarding@resend.dev>`
+- **To:** `dustin@litorja.com`
+- **Subject:** `New Contact Form Submission from [Name]`
+- **Content:** HTML-formatted with sender name, email, and message
+
+**Current Blocker:**
+- Lost access to `dustin@litorja.com` due to Zoho Mail TOTP/2FA issue
+- Contacted Zoho support for assistance
+- Code is ready and will work automatically once email access is restored
+
+**What Works Now:**
+- ✅ Form submissions still save to Supabase successfully
+- ✅ Email notification code is integrated and ready
+- ✅ When email access is restored, notifications will work immediately
+
+**Next Steps:**
+1. Regain access to Zoho Mail account
+2. Test email notifications locally
+3. Add `RESEND_API_KEY` to Vercel
+4. Deploy and verify in production
+
+**Commits:**
+- `6fca508` - "Add email notifications to contact form via Resend"
 
 ---
 
