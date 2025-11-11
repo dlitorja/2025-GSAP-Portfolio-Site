@@ -1,5 +1,26 @@
 import * as prismic from '@prismicio/client'
 
+// Site Settings Type (Singleton)
+export interface SiteSettingsDocument {
+  data: {
+    site_title: prismic.KeyTextField
+    hero_headline: prismic.KeyTextField
+    hero_description: prismic.KeyTextField
+    announcement_badge: prismic.KeyTextField
+    show_announcement: prismic.BooleanField
+    meta_title: prismic.KeyTextField
+    meta_description: prismic.KeyTextField
+    meta_keywords: prismic.KeyTextField
+    og_image: prismic.ImageField
+    github_url: prismic.LinkField
+    linkedin_url: prismic.LinkField
+    twitter_url: prismic.LinkField
+    instagram_url: prismic.LinkField
+    footer_text: prismic.KeyTextField
+    footer_tagline: prismic.KeyTextField
+  }
+}
+
 // Project Type
 export interface ProjectDocument {
   uid: string

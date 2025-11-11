@@ -1,0 +1,133 @@
+{
+  "id": "site_settings",
+  "label": "Site Settings",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "site_title": {
+        "type": "Text",
+        "config": {
+          "label": "Site Title",
+          "placeholder": "e.g., Dustin Litorja"
+        }
+      },
+      "hero_headline": {
+        "type": "Text",
+        "config": {
+          "label": "Hero Headline",
+          "placeholder": "e.g., Content Strategy | Marketing | Videography | Photography"
+        }
+      },
+      "hero_description": {
+        "type": "Text",
+        "config": {
+          "label": "Hero Description",
+          "placeholder": "e.g., Welcome to Dustin Litorja's Portfolio"
+        }
+      },
+      "announcement_badge": {
+        "type": "Text",
+        "config": {
+          "label": "Announcement Badge (Optional)",
+          "placeholder": "e.g., Available for freelance work"
+        }
+      },
+      "show_announcement": {
+        "type": "Boolean",
+        "config": {
+          "label": "Show Announcement Badge",
+          "default_value": false,
+          "placeholder_false": "Hidden",
+          "placeholder_true": "Visible"
+        }
+      }
+    },
+    "SEO": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title",
+          "placeholder": "Page title for SEO"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description",
+          "placeholder": "Description for SEO and social sharing"
+        }
+      },
+      "meta_keywords": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Keywords",
+          "placeholder": "Comma-separated keywords"
+        }
+      },
+      "og_image": {
+        "type": "Image",
+        "config": {
+          "label": "Open Graph Image",
+          "constraint": {
+            "width": 1200,
+            "height": 630
+          },
+          "thumbnails": []
+        }
+      }
+    },
+    "Social Links": {
+      "github_url": {
+        "type": "Link",
+        "config": {
+          "label": "GitHub URL",
+          "placeholder": "https://github.com/username",
+          "select": null
+        }
+      },
+      "linkedin_url": {
+        "type": "Link",
+        "config": {
+          "label": "LinkedIn URL",
+          "placeholder": "https://linkedin.com/in/username",
+          "select": null
+        }
+      },
+      "twitter_url": {
+        "type": "Link",
+        "config": {
+          "label": "Twitter/X URL",
+          "placeholder": "https://twitter.com/username",
+          "select": null
+        }
+      },
+      "instagram_url": {
+        "type": "Link",
+        "config": {
+          "label": "Instagram URL",
+          "placeholder": "https://instagram.com/username",
+          "select": null
+        }
+      }
+    },
+    "Footer": {
+      "footer_text": {
+        "type": "Text",
+        "config": {
+          "label": "Footer Text",
+          "placeholder": "e.g., © 2025 Dustin Litorja. All rights reserved."
+        }
+      },
+      "footer_tagline": {
+        "type": "Text",
+        "config": {
+          "label": "Footer Tagline",
+          "placeholder": "e.g., Creative developer and designer..."
+        }
+      }
+    }
+  }
+}
+

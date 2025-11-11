@@ -33,6 +33,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@slicemachine/adapter-next": "^0.3.86",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -44,6 +45,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "jsdom": "^27.1.0",
+    "slice-machine-ui": "^2.19.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.8"

@@ -16,7 +16,11 @@ const navItems = [
   { href: '/contact', label: 'Contact' },
 ]
 
-export function Navigation() {
+interface NavigationProps {
+  siteTitle?: string
+}
+
+export function Navigation({ siteTitle = 'Dustin Litorja' }: NavigationProps) {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -26,7 +30,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="text-xl font-bold">
-            Litorja
+            {siteTitle}
           </Link>
 
           {/* Desktop Navigation */}

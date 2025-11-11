@@ -5,9 +5,29 @@ import { gsap } from 'gsap'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, Github, Linkedin } from 'lucide-react'
+import { ArrowRight, Github, Linkedin, Twitter, Instagram } from 'lucide-react'
 
-export function AnimatedHero() {
+interface AnimatedHeroProps {
+  heroHeadline: string
+  heroDescription: string
+  announcementBadge?: string
+  showAnnouncement?: boolean
+  githubUrl?: string
+  linkedinUrl?: string
+  twitterUrl?: string
+  instagramUrl?: string
+}
+
+export function AnimatedHero({
+  heroHeadline,
+  heroDescription,
+  announcementBadge,
+  showAnnouncement = false,
+  githubUrl,
+  linkedinUrl,
+  twitterUrl,
+  instagramUrl,
+}: AnimatedHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
@@ -23,19 +43,22 @@ export function AnimatedHero() {
       })
 
       // Animate elements in sequence
-      tl.from(badgeRef.current, {
-        opacity: 0,
-        y: 20,
-        duration: 0.6,
-      })
-        .from(
+      if (showAnnouncement && badgeRef.current) {
+        tl.from(badgeRef.current, {
+          opacity: 0,
+          y: 20,
+          duration: 0.6,
+        })
+      }
+      
+      tl.from(
           titleRef.current,
           {
             opacity: 0,
             y: 40,
             duration: 0.8,
           },
-          '-=0.3'
+          showAnnouncement ? '-=0.3' : '0'
         )
         .from(
           subtitleRef.current,
@@ -75,24 +98,24 @@ export function AnimatedHero() {
     >
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <div className="space-y-4">
-          <div ref={badgeRef}>
-            <Badge variant="secondary" className="mb-4">
-              Available for freelance work
-            </Badge>
-          </div>
+          {showAnnouncement && announcementBadge && (
+            <div ref={badgeRef}>
+              <Badge variant="secondary" className="mb-4">
+                {announcementBadge}
+              </Badge>
+            </div>
+          )}
           <h1
             ref={titleRef}
             className="text-5xl md:text-7xl font-bold tracking-tight"
           >
-            Creative Developer
-            <span className="block text-muted-foreground">& Designer</span>
+            {heroHeadline}
           </h1>
           <p
             ref={subtitleRef}
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
           >
-            Crafting beautiful digital experiences with modern web technologies,
-            thoughtful design, and creative code.
+            {heroDescription}
           </p>
         </div>
 
@@ -115,24 +138,50 @@ export function AnimatedHero() {
           ref={socialsRef}
           className="flex gap-4 justify-center items-center pt-8"
         >
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="GitHub"
-          >
-            <Github className="h-6 w-6" />
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="h-6 w-6" />
-          </a>
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="GitHub"
+            >
+              <Github className="h-6 w-6" />
+            </a>
+          )}
+          {linkedinUrl && (
+            <a
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-6 w-6" />
+            </a>
+          )}
+          {twitterUrl && (
+            <a
+              href={twitterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Twitter"
+            >
+              <Twitter className="h-6 w-6" />
+            </a>
+          )}
+          {instagramUrl && (
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-6 w-6" />
+            </a>
+          )}
         </div>
       </div>
     </section>

@@ -3,12 +3,42 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ArrowRight } from 'lucide-react'
 import { AnimatedHero } from '@/components/animated-hero'
+import { createClient } from '@/lib/prismic'
+import { SiteSettingsDocument } from '@/types/prismic'
 
-export default function Home() {
+export default async function Home() {
+  // Fetch site settings from Prismic
+  const client = createClient()
+  let siteSettings: SiteSettingsDocument | null = null
+  
+  try {
+    siteSettings = await client.getSingle('site_settings') as unknown as SiteSettingsDocument
+  } catch (error) {
+    console.error('Failed to fetch site settings:', error)
+  }
+
+  // Extract data with fallbacks
+  const heroHeadline = siteSettings?.data.hero_headline || 'Content Strategy | Marketing | Videography | Photography'
+  const heroDescription = siteSettings?.data.hero_description || "Welcome to Dustin Litorja's Portfolio"
+  const announcementBadge = siteSettings?.data.announcement_badge || ''
+  const showAnnouncement = siteSettings?.data.show_announcement || false
+  const githubUrl = (siteSettings?.data.github_url && 'url' in siteSettings.data.github_url) ? siteSettings.data.github_url.url : ''
+  const linkedinUrl = (siteSettings?.data.linkedin_url && 'url' in siteSettings.data.linkedin_url) ? siteSettings.data.linkedin_url.url : ''
+  const twitterUrl = (siteSettings?.data.twitter_url && 'url' in siteSettings.data.twitter_url) ? siteSettings.data.twitter_url.url : ''
+  const instagramUrl = (siteSettings?.data.instagram_url && 'url' in siteSettings.data.instagram_url) ? siteSettings.data.instagram_url.url : ''
   return (
     <div className="container mx-auto px-4">
       {/* Hero Section with GSAP Animations */}
-      <AnimatedHero />
+      <AnimatedHero 
+        heroHeadline={heroHeadline}
+        heroDescription={heroDescription}
+        announcementBadge={announcementBadge}
+        showAnnouncement={showAnnouncement}
+        githubUrl={githubUrl}
+        linkedinUrl={linkedinUrl}
+        twitterUrl={twitterUrl}
+        instagramUrl={instagramUrl}
+      />
 
       {/* Featured Work Preview */}
       <section className="py-20">
