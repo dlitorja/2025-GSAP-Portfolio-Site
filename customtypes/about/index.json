@@ -1,0 +1,149 @@
+{
+  "id": "about",
+  "label": "About",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "name": {
+        "type": "Text",
+        "config": {
+          "label": "Name",
+          "placeholder": "e.g., Dustin Litorja"
+        }
+      },
+      "role": {
+        "type": "Text",
+        "config": {
+          "label": "Role/Title",
+          "placeholder": "e.g., Content Strategist & Marketing Consultant"
+        }
+      },
+      "bio": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Bio",
+          "placeholder": "Write a brief bio about yourself...",
+          "allowTargetBlank": true,
+          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      },
+      "profileImage": {
+        "type": "Image",
+        "config": {
+          "label": "Profile Image",
+          "constraint": {
+            "width": 800,
+            "height": 800
+          },
+          "thumbnails": [
+            {
+              "name": "square",
+              "width": 400,
+              "height": 400
+            }
+          ]
+        }
+      },
+      "resumeLink": {
+        "type": "Link",
+        "config": {
+          "label": "Resume Link",
+          "placeholder": "Link to your resume PDF or document",
+          "select": null
+        }
+      }
+    },
+    "Skills": {
+      "skills": {
+        "type": "Group",
+        "config": {
+          "label": "Skills",
+          "fields": {
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Skill Title",
+                "placeholder": "e.g., Content Strategy"
+              }
+            },
+            "description": {
+              "type": "Text",
+              "config": {
+                "label": "Description",
+                "placeholder": "Brief description of this skill"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Experience": {
+      "experience": {
+        "type": "Group",
+        "config": {
+          "label": "Experience",
+          "fields": {
+            "title": {
+              "type": "Text",
+              "config": {
+                "label": "Job Title",
+                "placeholder": "e.g., Senior Marketing Manager"
+              }
+            },
+            "company": {
+              "type": "Text",
+              "config": {
+                "label": "Company",
+                "placeholder": "e.g., Acme Inc."
+              }
+            },
+            "dates": {
+              "type": "Text",
+              "config": {
+                "label": "Dates",
+                "placeholder": "e.g., Jan 2020 - Present"
+              }
+            },
+            "description": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Description",
+                "placeholder": "Describe your role and achievements...",
+                "allowTargetBlank": true,
+                "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Social Links": {
+      "socialLinks": {
+        "type": "Group",
+        "config": {
+          "label": "Social Links",
+          "fields": {
+            "platform": {
+              "type": "Text",
+              "config": {
+                "label": "Platform",
+                "placeholder": "e.g., LinkedIn, Twitter, GitHub"
+              }
+            },
+            "url": {
+              "type": "Link",
+              "config": {
+                "label": "URL",
+                "placeholder": "https://...",
+                "select": null
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

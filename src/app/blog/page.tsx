@@ -26,7 +26,7 @@ export default async function BlogPage() {
   let posts: any[] = []
   
   try {
-    const response = await client.getAllByType('blog_post', {
+    const response = await client.getAllByType('blog_post' as any, {
       orderings: [{ field: 'my.blog_post.publishDate', direction: 'desc' }],
     })
     posts = response

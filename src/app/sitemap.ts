@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic routes - Projects
   let projectRoutes: MetadataRoute.Sitemap = []
   try {
-    const projects = await client.getAllByType('project')
+    const projects = await client.getAllByType('project' as any)
     projectRoutes = projects.map((project) => ({
       url: `${baseUrl}/projects/${project.uid}`,
       lastModified: new Date(project.last_publication_date),
@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic routes - Blog Posts
   let blogRoutes: MetadataRoute.Sitemap = []
   try {
-    const posts = await client.getAllByType('blog_post')
+    const posts = await client.getAllByType('blog_post' as any)
     blogRoutes = posts.map((post) => ({
       url: `${baseUrl}/blog/${post.uid}`,
       lastModified: new Date(post.last_publication_date),

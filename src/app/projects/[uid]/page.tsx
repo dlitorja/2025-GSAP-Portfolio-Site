@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { ArrowLeft, ExternalLink, Github, Calendar } from 'lucide-react'
+import { ProjectDocument } from '@/types/prismic'
 
 interface ProjectPageProps {
   params: Promise<{ uid: string }>
@@ -19,10 +20,13 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const client = createClient()
 
   try {
-    const project = await client.getByUID('project', uid)
+    const project = await client.getByUID('project' as any, uid) as unknown as ProjectDocument
+    const descriptionText = project.data.description?.[0] && 'text' in project.data.description[0]
+      ? project.data.description[0].text
+      : 'Project details'
     return {
       title: project.data.title || 'Project',
-      description: project.data.description?.[0]?.text || 'Project details',
+      description: descriptionText,
     }
   } catch {
     return {
@@ -35,9 +39,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const { uid } = await params
   const client = createClient()
 
-  let project
+  let project: ProjectDocument | null = null
   try {
-    project = await client.getByUID('project', uid)
+    project = await client.getByUID('project' as any, uid) as unknown as ProjectDocument
   } catch {
     notFound()
   }
@@ -85,7 +89,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             {/* Links */}
             <div className="flex gap-4 flex-wrap">
-              {data.projectLink?.url && (
+              {data.projectLink && 'url' in data.projectLink && data.projectLink.url && (
                 <Button asChild size="lg">
                   <a
                     href={data.projectLink.url}
@@ -97,7 +101,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   </a>
                 </Button>
               )}
-              {data.githubLink?.url && (
+              {data.githubLink && 'url' in data.githubLink && data.githubLink.url && (
                 <Button asChild variant="outline" size="lg">
                   <a
                     href={data.githubLink.url}
@@ -121,7 +125,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="mb-12 rounded-lg overflow-hidden shadow-2xl ring-1 ring-border">
               <img
                 src={data.featuredImage.url}
-                alt={data.featuredImage.alt || data.title}
+                alt={data.featuredImage.alt || data.title || 'Project image'}
                 className="w-full h-auto"
               />
             </div>
@@ -191,7 +195,7 @@ export async function generateStaticParams() {
   const client = createClient()
 
   try {
-    const projects = await client.getAllByType('project')
+    const projects = await client.getAllByType('project' as any)
     return projects.map((project) => ({
       uid: project.uid,
     }))

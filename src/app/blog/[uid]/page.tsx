@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react'
+import { BlogPostDocument } from '@/types/prismic'
 
 interface BlogPostPageProps {
   params: Promise<{ uid: string }>
@@ -28,13 +29,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const client = createClient()
 
   try {
-    const post = await client.getByUID('blog_post', uid)
+    const post = await client.getByUID('blog_post' as any, uid) as unknown as BlogPostDocument
+    const excerptText = post.data.excerpt?.[0] && 'text' in post.data.excerpt[0] 
+      ? post.data.excerpt[0].text 
+      : 'Read this blog post'
     return {
       title: post.data.title || 'Blog Post',
-      description: post.data.excerpt?.[0]?.text || 'Read this blog post',
+      description: excerptText,
       openGraph: {
         title: post.data.title || 'Blog Post',
-        description: post.data.excerpt?.[0]?.text || 'Read this blog post',
+        description: excerptText,
         images: post.data.featuredImage?.url ? [post.data.featuredImage.url] : [],
         type: 'article',
         publishedTime: post.data.publishDate || undefined,
@@ -51,9 +55,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { uid } = await params
   const client = createClient()
 
-  let post
+  let post: BlogPostDocument | null = null
   try {
-    post = await client.getByUID('blog_post', uid)
+    post = await client.getByUID('blog_post' as any, uid) as unknown as BlogPostDocument
   } catch {
     notFound()
   }
@@ -121,9 +125,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             {/* Excerpt */}
-            {data.excerpt && (
+            {data.excerpt && data.excerpt[0] && 'text' in data.excerpt[0] && (
               <p className="text-xl text-muted-foreground leading-relaxed">
-                {data.excerpt[0]?.text}
+                {data.excerpt[0].text}
               </p>
             )}
           </header>
@@ -137,7 +141,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="mb-12 rounded-lg overflow-hidden shadow-2xl ring-1 ring-border">
               <img
                 src={data.featuredImage.url}
-                alt={data.featuredImage.alt || data.title}
+                alt={data.featuredImage.alt || data.title || 'Featured image'}
                 className="w-full h-auto"
               />
             </div>
@@ -188,7 +192,7 @@ export async function generateStaticParams() {
   const client = createClient()
 
   try {
-    const posts = await client.getAllByType('blog_post')
+    const posts = await client.getAllByType('blog_post' as any)
     return posts.map((post) => ({
       uid: post.uid,
     }))

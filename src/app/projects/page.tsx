@@ -17,7 +17,7 @@ export default async function ProjectsPage() {
   let projects: any[] = []
   
   try {
-    const response = await client.getAllByType('project', {
+    const response = await client.getAllByType('project' as any, {
       orderings: [{ field: 'my.project.date', direction: 'desc' }],
     })
     projects = response
@@ -97,13 +97,13 @@ export default async function ProjectsPage() {
                         </div>
                       )}
                       <div className="flex gap-4 text-sm text-muted-foreground">
-                        {project.data.projectLink?.url && (
+                        {project.data.projectLink && 'url' in project.data.projectLink && project.data.projectLink.url && (
                           <span className="flex items-center gap-1 group-hover:text-primary transition-colors">
                             <ExternalLink className="h-4 w-4" />
                             Live Site
                           </span>
                         )}
-                        {project.data.githubLink?.url && (
+                        {project.data.githubLink && 'url' in project.data.githubLink && project.data.githubLink.url && (
                           <span className="flex items-center gap-1 group-hover:text-primary transition-colors">
                             <Github className="h-4 w-4" />
                             Source Code
