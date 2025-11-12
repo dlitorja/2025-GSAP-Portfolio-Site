@@ -1,15 +1,15 @@
-import { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import { ContactForm } from '@/components/contact-form'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ScrollReveal } from '@/components/scroll-reveal'
-import { Mail } from 'lucide-react'
-
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Get in touch with me for collaborations, freelance work, or just to say hi',
-}
+import { Mail, Shield } from 'lucide-react'
+import { Label } from '@/components/ui/label'
 
 export default function ContactPage() {
+  const [isHumanVerified, setIsHumanVerified] = useState(false)
+
   return (
     <div className="container mx-auto px-4 py-20">
       <div className="max-w-7xl mx-auto">
@@ -27,22 +27,53 @@ export default function ContactPage() {
           {/* Contact Information */}
           <ScrollReveal direction="right" delay={0.2}>
             <div className="lg:w-64 lg:flex-shrink-0 w-full">
-              <Card className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Mail className="h-5 w-5 text-primary" />
-                    Email
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <a
-                    href="mailto:dustin@litorja.com"
-                    className="text-primary hover:underline transition-colors break-all"
-                  >
-                    dustin@litorja.com
-                  </a>
-                </CardContent>
-              </Card>
+              {isHumanVerified ? (
+                <Card className="hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Mail className="h-5 w-5 text-primary" />
+                      Email
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <a
+                      href="mailto:dustin@litorja.com"
+                      className="text-primary hover:underline transition-colors break-all"
+                    >
+                      dustin@litorja.com
+                    </a>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-primary" />
+                      Email
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      To protect against spam, please confirm you're not a robot to reveal the email address.
+                    </p>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="human-check"
+                        checked={isHumanVerified}
+                        onChange={(e) => setIsHumanVerified(e.target.checked)}
+                        className="h-4 w-4 rounded border-input text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer"
+                      />
+                      <Label
+                        htmlFor="human-check"
+                        className="text-sm font-medium leading-none cursor-pointer select-none"
+                      >
+                        I'm not a robot
+                      </Label>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </ScrollReveal>
 
