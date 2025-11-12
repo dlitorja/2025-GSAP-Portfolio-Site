@@ -23,7 +23,24 @@ export default function ContactPage() {
           </div>
         </ScrollReveal>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start justify-center max-w-5xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-8 items-center justify-center max-w-5xl mx-auto">
+          {/* Contact Form */}
+          <ScrollReveal direction="left" delay={0.2}>
+            <div className="flex-1 w-full min-w-0 max-w-2xl">
+              <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-2xl">Send a Message</CardTitle>
+                  <CardDescription className="text-base">
+                    Fill out the form below and I'll get back to you as soon as possible.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ContactForm />
+                </CardContent>
+              </Card>
+            </div>
+          </ScrollReveal>
+
           {/* Contact Information */}
           <ScrollReveal direction="right" delay={0.2}>
             <div className="lg:w-64 lg:flex-shrink-0 w-full">
@@ -74,23 +91,6 @@ export default function ContactPage() {
                   </CardContent>
                 </Card>
               )}
-            </div>
-          </ScrollReveal>
-
-          {/* Contact Form */}
-          <ScrollReveal direction="left" delay={0.2}>
-            <div className="flex-1 w-full min-w-0 max-w-2xl">
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl">Send a Message</CardTitle>
-                  <CardDescription className="text-base">
-                    Fill out the form below and I'll get back to you as soon as possible.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ContactForm />
-                </CardContent>
-              </Card>
             </div>
           </ScrollReveal>
         </div>
