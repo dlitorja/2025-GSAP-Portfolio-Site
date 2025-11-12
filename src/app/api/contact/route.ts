@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
     if (resend) {
       try {
         await resend.emails.send({
-          from: 'Portfolio Contact Form <onboarding@resend.dev>', // You can customize this later with your domain
-          to: 'dustin@litorja.com', // Your email address
+          from: 'Portfolio Contact Form <noreply@litorja.com>',
+          to: 'dustin@litorja.com',
           subject: `New Contact Form Submission from ${validatedData.name}`,
           html: `
             <h2>New Contact Form Submission</h2>
