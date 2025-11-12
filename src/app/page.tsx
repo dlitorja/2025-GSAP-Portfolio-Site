@@ -7,6 +7,9 @@ import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { createClient } from '@/lib/prismic'
 import { SiteSettingsDocument } from '@/types/prismic'
 
+// Enable ISR - regenerate page every 60 seconds
+export const revalidate = 60
+
 export default async function Home() {
   // Fetch site settings from Prismic
   const client = createClient()

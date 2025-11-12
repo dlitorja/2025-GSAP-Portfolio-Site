@@ -76,6 +76,9 @@ export const metadata: Metadata = {
   description: 'Learn more about me, my skills, and experience',
 }
 
+// Enable ISR - regenerate page every 60 seconds
+export const revalidate = 60
+
 export default async function AboutPage() {
   const client = createClient()
   

@@ -35,6 +35,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 }
 
+// Enable ISR - regenerate page every 60 seconds
+export const revalidate = 60
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { uid } = await params
   const client = createClient()

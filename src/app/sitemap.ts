@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@/lib/prismic'
 
+// Enable ISR - regenerate sitemap every 60 seconds
+export const revalidate = 60
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://litorja.com'
   const client = createClient()

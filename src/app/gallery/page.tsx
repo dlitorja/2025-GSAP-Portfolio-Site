@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description: 'A collection of my photography and videography work',
 }
 
+// Enable ISR - regenerate page every 60 seconds
+export const revalidate = 60
+
 export default async function GalleryPage() {
   const client = createClient()
   

@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description: 'Articles about web development, design, and creative coding',
 }
 
+// Enable ISR - regenerate page every 60 seconds
+export const revalidate = 60
+
 function estimateReadingTime(richText: any[]): number {
   if (!richText) return 5
   
