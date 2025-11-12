@@ -19,10 +19,10 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 ## 📊 Overall Progress
 
 **Phase 1: Development** ✅ COMPLETE (100%)  
-**Phase 2: External Setup** ✅ COMPLETE (95%) - All Custom Types Created  
+**Phase 2: External Setup** ✅ COMPLETE (100%) - All Services Integrated  
 **Phase 3: Content Migration** 🔄 IN PROGRESS (35%) - Ready for Content Entry  
-**Phase 4: Deployment** ✅ COMPLETE (100%) - Deployment Issues Fixed  
-**Phase 5: Launch** 🔄 PARTIAL - Beta Live (65%)
+**Phase 4: Deployment** ✅ COMPLETE (100%) - Fully Operational  
+**Phase 5: Launch** 🔄 PARTIAL - Beta Live (70%)
 
 ---
 
@@ -141,7 +141,7 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 
 ---
 
-## ✅ Phase 2: External Service Setup (85% COMPLETE)
+## ✅ Phase 2: External Service Setup (100% COMPLETE)
 
 ### 2.1 Prismic Setup ✅ COMPLETE
 **Documentation:** `PRISMIC_SETUP.md`, `PRISMIC_SITE_SETTINGS_GUIDE.md`, `IMPLEMENTATION_SUMMARY.md`
@@ -214,11 +214,42 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
   - Prismic (repository name + access token)
   - Supabase (URL + anon key)
   - GitHub (username + token)
+  - Resend (API key)
 - ✅ Test locally with `npm run dev`
 - ✅ Verify all integrations work
 - ✅ Add to Vercel environment variables
 
 **Time Spent:** 20 minutes
+
+### 2.5 Email Services Setup ✅ COMPLETE
+
+#### Resend (Email Sending) ✅
+- ✅ Create Resend account (free tier: 3,000 emails/month)
+- ✅ Verify domain (litorja.com) with DNS records in Cloudflare
+- ✅ Install Resend SDK (`npm install resend`)
+- ✅ Integrate into contact form API route
+- ✅ Add `RESEND_API_KEY` to `.env.local` and Vercel
+- ✅ Configure to send from `noreply@litorja.com` (verified domain)
+- ✅ Test and verify sending working
+
+**Time Spent:** 2 hours (including troubleshooting domain verification)  
+**Status:** ✅ Sending emails successfully via verified domain
+
+#### ImprovMX (Email Forwarding) ✅
+- ✅ Create ImprovMX account (free tier)
+- ✅ Configure DNS in Cloudflare:
+  - Remove Cloudflare Email Routing MX records
+  - Add ImprovMX MX records (mx1, mx2.improvmx.com)
+  - Update SPF TXT record
+- ✅ Set up forwarding: `dustin@litorja.com` → Primary Gmail
+- ✅ Verify with test emails
+- ✅ Test complete email pipeline (Resend → ImprovMX → Gmail)
+
+**Time Spent:** 1 hour  
+**Status:** ✅ Email forwarding working perfectly
+
+**Complete Email Flow:**
+Contact Form → Supabase (storage) → Resend (sending) → ImprovMX (forwarding) → Gmail ✅
 
 ---
 
@@ -410,6 +441,8 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 | Vercel | Hobby | $0/month | ✅ Active & Deployed |
 | Prismic | Free | $0/month | ✅ Active & Integrated |
 | Supabase | Free | $0/month | ✅ Active & Configured |
+| Resend | Free | $0/month (3K emails/month) | ✅ Active & Sending |
+| ImprovMX | Free | $0/month | ✅ Active & Forwarding |
 | Domain | Owned | ~$12/year | ✅ Owned (beta.litorja.com live) |
 | **Total** | | **$0/month** | ✅ Goal Achieved! |
 
@@ -436,6 +469,9 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ **Deployment issues resolved (Resend optional)**
 - ✅ **Navigation styling bug fixed**
 - ✅ **Comprehensive project media support (images, embeds, uploads)**
+- ✅ **ImprovMX email forwarding configured**
+- ✅ **Resend email notifications working (contact form → Gmail)**
+- ✅ **Complete email pipeline operational (Resend + ImprovMX)**
 
 **Current Live Sites:**
 - 🔵 **beta.litorja.com** → New Next.js portfolio with Prismic CMS (LIVE & WORKING)
@@ -526,9 +562,9 @@ The technical foundation is complete and live! The beta site is fully functional
 
 ---
 
-### Session: November 11, 2025 - Part 3 🔄
+### Session: November 11, 2025 - Part 3 ✅
 
-#### Email Notifications via Resend 🔄 IN PROGRESS
+#### Email Notifications via Resend (Initial Setup) ✅
 - ✅ Signed up for Resend (free tier: 3,000 emails/month)
 - ✅ Verified domain (litorja.com) with Resend via Cloudflare DNS
 - ✅ Installed Resend SDK (`npm install resend`)
@@ -536,31 +572,18 @@ The technical foundation is complete and live! The beta site is fully functional
 - ✅ Configured email notifications with HTML formatting
 - ✅ Added `RESEND_API_KEY` to `.env.local`
 - ✅ Implemented graceful error handling (form succeeds even if email fails)
-- ⏳ **Pending:** Testing blocked by Zoho Mail 2FA access issue
-- ⏳ **Pending:** Add `RESEND_API_KEY` to Vercel environment variables
-- ⏳ **Pending:** Test in production once email access restored
 
-**Email Configuration:**
-- **From:** `Portfolio Contact Form <onboarding@resend.dev>`
+**Email Configuration (Initial):**
+- **From:** `Portfolio Contact Form <onboarding@resend.dev>` (later changed to use verified domain)
 - **To:** `dustin@litorja.com`
 - **Subject:** `New Contact Form Submission from [Name]`
 - **Content:** HTML-formatted with sender name, email, and message
 
-**Current Blocker:**
-- Lost access to `dustin@litorja.com` due to Zoho Mail TOTP/2FA issue
-- Contacted Zoho support for assistance
-- Code is ready and will work automatically once email access is restored
-
-**What Works Now:**
-- ✅ Form submissions still save to Supabase successfully
-- ✅ Email notification code is integrated and ready
-- ✅ When email access is restored, notifications will work immediately
-
-**Next Steps:**
-1. Regain access to Zoho Mail account
-2. Test email notifications locally
-3. Add `RESEND_API_KEY` to Vercel
-4. Deploy and verify in production
+**Status at End of Session:**
+- Code integrated and ready
+- Needed email access solution (resolved in Session Nov 12 with ImprovMX)
+- Needed to add `RESEND_API_KEY` to Vercel (completed in Session Nov 12)
+- Full completion achieved in November 12 session
 
 **Commits:**
 - `6fca508` - "Add email notifications to contact form via Resend"
@@ -659,6 +682,61 @@ The technical foundation is complete and live! The beta site is fully functional
 - ✅ Contact form fully functional with Supabase
 - ✅ UI polish complete
 - ⏳ **Next:** Push custom types to Prismic and begin content entry
+
+---
+
+### Session: November 12, 2025 ✅
+
+#### ImprovMX Email Forwarding & Contact Form Completion ✅
+
+**Email Infrastructure Setup:**
+- ✅ Signed up for ImprovMX (free email forwarding service)
+- ✅ Configured DNS records in Cloudflare for ImprovMX
+  - Removed 3 Cloudflare Email Routing MX records (route1, route2, route3.mx.cloudflare.net)
+  - Disabled Cloudflare Email Routing to unlock MX records
+  - Added ImprovMX MX records (mx1.improvmx.com priority 10, mx2.improvmx.com priority 20)
+  - Updated SPF TXT record to include ImprovMX
+  - Kept Resend `send` subdomain records intact
+- ✅ Set up email forwarding: `dustin@litorja.com` → Primary Gmail inbox
+- ✅ Verified ImprovMX working with test emails
+
+**Resend Email Notifications Fixed:**
+- ✅ Identified 403 error cause: Resend free tier requires verified domain for sending
+- ✅ Changed email `from` address from `onboarding@resend.dev` to `noreply@litorja.com`
+- ✅ Updated contact form API route to use verified domain
+- ✅ Added `RESEND_API_KEY` to Vercel environment variables
+- ✅ Redeployed to production
+- ✅ Tested and verified email flow working end-to-end
+
+**Email Flow (Complete & Working):**
+1. User submits contact form on beta.litorja.com
+2. Submission saved to Supabase ✅
+3. Resend sends email from `noreply@litorja.com` ✅
+4. ImprovMX forwards to primary Gmail inbox ✅
+5. Email received successfully ✅
+
+**Troubleshooting Process:**
+- Verified environment variables matched between local and Vercel
+- Tested form locally (worked) vs production (didn't work initially)
+- Redeployed Vercel after env var updates (fixed Supabase submissions)
+- Checked Resend logs and found 403 errors
+- Identified Resend domain verification requirement
+- Updated code to use verified domain
+- Full email pipeline now operational
+
+**Result:** Contact form is now 100% functional with complete email notification pipeline! Form submissions are stored in Supabase AND forwarded to Gmail via Resend + ImprovMX. 📧✅🎉
+
+**Files Modified:**
+- `src/app/api/contact/route.ts` - Changed from address to use verified domain
+
+**Commits:**
+- `63d4c84` - "Fix contact form email: Change from address to use verified domain"
+
+**Services Integrated:**
+- ✅ Supabase (form storage)
+- ✅ Resend (email sending)
+- ✅ ImprovMX (email forwarding)
+- ✅ Cloudflare (DNS management)
 
 ---
 
