@@ -275,6 +275,11 @@ export function AnimatedHero({
         >
           <MagneticButton strength={0.2}>
             <Button asChild size="lg" className="text-lg">
+              <Link href="/gallery">My Content</Link>
+            </Button>
+          </MagneticButton>
+          <MagneticButton strength={0.2}>
+            <Button asChild size="lg" className="text-lg">
               <Link href="/projects">
                 View My Work
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -282,7 +287,7 @@ export function AnimatedHero({
             </Button>
           </MagneticButton>
           <MagneticButton strength={0.2}>
-            <Button asChild size="lg" variant="outline" className="text-lg">
+            <Button asChild size="lg" className="text-lg">
               <Link href="/contact">Get In Touch</Link>
             </Button>
           </MagneticButton>
