@@ -60,6 +60,14 @@
           },
           "thumbnails": []
         }
+      },
+      "homepage_background_video": {
+        "type": "Link",
+        "config": {
+          "label": "Homepage Background Video (MP4)",
+          "placeholder": "Upload a looping video file (MP4 format recommended)",
+          "select": "media"
+        }
       }
     },
     "SEO": {

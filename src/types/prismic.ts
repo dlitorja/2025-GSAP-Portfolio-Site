@@ -20,6 +20,7 @@ export interface SiteSettingsDocument {
     footer_text: prismic.KeyTextField
     footer_tagline: prismic.KeyTextField
     homepage_background_image: prismic.ImageField
+    homepage_background_video: prismic.LinkField
   }
 }
 
@@ -92,6 +93,39 @@ export interface AboutDocument {
       url: prismic.LinkField
     }>
     resumeLink: prismic.LinkField
+  }
+}
+
+// Gallery Type
+export interface GalleryDocument {
+  uid: string
+  data: {
+    title: prismic.KeyTextField
+    description: prismic.RichTextField
+    featuredImage: prismic.ImageField
+    category?: prismic.SelectField
+    date?: prismic.DateField
+    location?: prismic.KeyTextField
+    mediaType?: prismic.SelectField
+    singleImage?: prismic.ImageField
+    imageGallery?: Array<{
+      image: prismic.ImageField
+      caption?: prismic.KeyTextField
+    }>
+    singleVideo?: prismic.SelectField
+    videoEmbed?: prismic.EmbedField
+    videoFile?: prismic.LinkField
+    videoGallery?: Array<{
+      videoType?: prismic.SelectField
+      videoEmbed?: prismic.EmbedField
+      videoFile?: prismic.LinkField
+      videoTitle?: prismic.KeyTextField
+      videoDescription?: prismic.KeyTextField
+      thumbnail?: prismic.ImageField
+    }>
+    tags?: Array<{
+      tag: prismic.KeyTextField
+    }>
   }
 }
 

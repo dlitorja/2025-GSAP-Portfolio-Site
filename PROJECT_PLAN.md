@@ -1,7 +1,7 @@
 # Litorja Portfolio - Project Plan & Progress Tracker
 
-**Last Updated:** November 11, 2025  
-**Status:** 🚀 Beta Site Live at beta.litorja.com - Projects & Blog Custom Types Ready - Deployment Fixed
+**Last Updated:** December 2025  
+**Status:** 🚀 Beta Site Live at beta.litorja.com - Gallery Page Added - Video Background Support - Enhanced UI
 
 ---
 
@@ -26,6 +26,34 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 
 ---
 
+## 🆕 Recent Updates (December 2025)
+
+### Gallery Page Implementation ✅
+- ✅ Created Gallery custom type in Prismic for photography and videography
+- ✅ Gallery listing page with responsive grid layout
+- ✅ Gallery detail pages supporting multiple media types:
+  - Single images and image galleries
+  - Single videos and video galleries  
+  - Mixed media combinations
+- ✅ Category system (Photography, Videography, Mixed Media)
+- ✅ Tags, location, and date metadata
+- ✅ Added Gallery link to navigation (between About and Projects)
+
+### Video Background Feature ✅
+- ✅ Added video background support to Site Settings
+- ✅ Homepage now supports looping MP4 video backgrounds
+- ✅ Video auto-plays, loops, and is muted for autoplay compliance
+- ✅ 65% dark overlay for text readability
+- ✅ Video takes priority over background image when both are set
+
+### UI/UX Improvements ✅
+- ✅ Fixed text color readability in light mode with backgrounds
+- ✅ Section headings ("Featured Work", "Latest Articles") now turn white when background is present
+- ✅ "View All" buttons adapt to background presence
+- ✅ Improved contrast and readability across all themes
+
+---
+
 ## ✅ Phase 1: Development (COMPLETE)
 
 ### 1.1 Project Foundation ✅
@@ -47,6 +75,7 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
   - Project (Repeatable Type)
   - Blog Post (Repeatable Type)
   - About (Single Type)
+  - **Gallery (Repeatable Type)** ✅ NEW - Photography & Videography showcase
 
 ### 1.3 Supabase Integration ✅
 - ✅ Supabase client configured (`src/lib/supabase.ts`)
@@ -57,6 +86,7 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 
 ### 1.4 Core Components ✅
 - ✅ Navigation with mobile menu - **Prismic-powered** (`src/components/navigation.tsx`)
+  - **Gallery link added** ✅ NEW - Positioned between About and Projects
 - ✅ Footer with social links - **Prismic-powered** (`src/components/footer.tsx`)
 - ✅ Theme provider and toggle (`src/components/theme-provider.tsx`, `theme-toggle.tsx`)
 - ✅ Animated hero section - **Prismic-powered with headline, subtitle, description** (`src/components/animated-hero.tsx`)
@@ -71,6 +101,8 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
   - Hero section with GSAP animations
   - Featured projects preview
   - Latest blog posts preview
+  - **Video background support** ✅ NEW - Looping MP4 background with 65% dark overlay
+  - **Light mode text color fixes** ✅ NEW - White text on background for readability
 - ✅ About page (`src/app/about/page.tsx`)
   - Prismic integration
   - Bio, skills, experience display
@@ -81,6 +113,15 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
   - Prismic integration
   - Image galleries
   - Video embeds support
+- ✅ **Gallery pages** ✅ NEW
+  - Listing page (`src/app/gallery/page.tsx`)
+  - Detail page (`src/app/gallery/[uid]/page.tsx`)
+  - Prismic integration
+  - Supports Photography, Videography, and Mixed Media
+  - Image galleries with captions
+  - Video embeds and uploaded videos
+  - Category filtering and tags
+  - Location and date metadata
 - ✅ Blog pages
   - Listing page (`src/app/blog/page.tsx`)
   - Detail page (`src/app/blog/[uid]/page.tsx`)

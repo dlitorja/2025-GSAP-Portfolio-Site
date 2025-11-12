@@ -34,11 +34,34 @@ export default async function Home() {
   const twitterUrl = (siteSettings?.data.twitter_url && 'url' in siteSettings.data.twitter_url) ? siteSettings.data.twitter_url.url : ''
   const instagramUrl = (siteSettings?.data.instagram_url && 'url' in siteSettings.data.instagram_url) ? siteSettings.data.instagram_url.url : ''
   const homepageBackgroundImage = siteSettings?.data.homepage_background_image?.url
+  const homepageBackgroundVideo = (siteSettings?.data.homepage_background_video && 'url' in siteSettings.data.homepage_background_video) 
+    ? siteSettings.data.homepage_background_video.url 
+    : null
   
   return (
     <div className="relative min-h-screen">
-      {/* Background Image with Dark Overlay */}
-      {homepageBackgroundImage && (
+      {/* Background Video (takes priority over image) */}
+      {homepageBackgroundVideo ? (
+        <div className="fixed inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+          >
+            <source src={homepageBackgroundVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {/* Dark Overlay - adjustable opacity */}
+          <div className="absolute inset-0 bg-black/65" />
+        </div>
+      ) : homepageBackgroundImage ? (
+        /* Background Image with Dark Overlay */
         <div 
           className="fixed inset-0 z-0"
           style={{
@@ -50,9 +73,9 @@ export default async function Home() {
           }}
         >
           {/* Dark Overlay - adjustable opacity */}
-          <div className="absolute inset-0 bg-black/75" />
+          <div className="absolute inset-0 bg-black/65" />
         </div>
-      )}
+      ) : null}
       
       {/* Content Container */}
       <div className="relative z-10 container mx-auto px-4">
@@ -67,7 +90,7 @@ export default async function Home() {
           linkedinUrl={linkedinUrl}
           twitterUrl={twitterUrl}
           instagramUrl={instagramUrl}
-          hasBackgroundImage={!!homepageBackgroundImage}
+          hasBackgroundImage={!!(homepageBackgroundVideo || homepageBackgroundImage)}
         />
 
         {/* Featured Work Preview */}
@@ -76,14 +99,14 @@ export default async function Home() {
             <div className="max-w-4xl mx-auto">
               <div className="flex justify-between items-end mb-12">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-2">
+                  <h2 className={`text-3xl md:text-4xl font-bold mb-2 ${(homepageBackgroundVideo || homepageBackgroundImage) ? 'text-white' : ''}`}>
                     Featured Work
                   </h2>
-                  <p className="text-muted-foreground">
+                  <p className={(homepageBackgroundVideo || homepageBackgroundImage) ? 'text-white/90' : 'text-muted-foreground'}>
                     A selection of my recent projects
                   </p>
                 </div>
-                <Button asChild variant="ghost">
+                <Button asChild variant="ghost" className={(homepageBackgroundVideo || homepageBackgroundImage) ? 'text-white hover:text-white/80 hover:bg-white/10' : ''}>
                   <Link href="/projects">
                     View All
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -97,7 +120,7 @@ export default async function Home() {
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className={`group relative overflow-hidden rounded-lg border border-border hover:shadow-xl transition-all duration-300 hover:scale-[1.02] ${homepageBackgroundImage ? 'bg-card/95 backdrop-blur-sm' : 'bg-card'}`}
+                      className={`group relative overflow-hidden rounded-lg border border-border hover:shadow-xl transition-all duration-300 hover:scale-[1.02] ${(homepageBackgroundVideo || homepageBackgroundImage) ? 'bg-card/95 backdrop-blur-sm' : 'bg-card'}`}
                     >
                       <div className="aspect-video bg-muted group-hover:scale-110 transition-transform duration-500" />
                       <div className="p-6">
@@ -127,14 +150,14 @@ export default async function Home() {
             <div className="max-w-4xl mx-auto">
               <div className="flex justify-between items-end mb-12">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-2">
+                  <h2 className={`text-3xl md:text-4xl font-bold mb-2 ${(homepageBackgroundVideo || homepageBackgroundImage) ? 'text-white' : ''}`}>
                     Latest Articles
                   </h2>
-                  <p className="text-muted-foreground">
+                  <p className={(homepageBackgroundVideo || homepageBackgroundImage) ? 'text-white/90' : 'text-muted-foreground'}>
                     Thoughts on design, development, and creativity
                   </p>
                 </div>
-                <Button asChild variant="ghost">
+                <Button asChild variant="ghost" className={(homepageBackgroundVideo || homepageBackgroundImage) ? 'text-white hover:text-white/80 hover:bg-white/10' : ''}>
                   <Link href="/blog">
                     View All
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -148,7 +171,7 @@ export default async function Home() {
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className={`group border border-border rounded-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-[1.01] ${homepageBackgroundImage ? 'bg-card/95 backdrop-blur-sm' : ''}`}
+                      className={`group border border-border rounded-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-[1.01] ${(homepageBackgroundVideo || homepageBackgroundImage) ? 'bg-card/95 backdrop-blur-sm' : ''}`}
                     >
                       <div className="flex flex-col md:flex-row gap-6">
                         <div className="flex-1">
