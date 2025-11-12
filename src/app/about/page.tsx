@@ -155,27 +155,12 @@ export default async function AboutPage() {
                   </ScrollReveal>
 
                   {/* Social Links */}
-                  {((data.resumeLink && 'url' in data.resumeLink && data.resumeLink.url) || (data.socialLinks && data.socialLinks.length > 0)) && (
+                  {data.socialLinks && data.socialLinks.length > 0 && (
                     <ScrollReveal direction="up" delay={0.2}>
                       <div className="mb-16">
                         <h2 className="text-2xl md:text-3xl font-bold mb-6">Connect</h2>
                         <div className="flex gap-3 flex-wrap">
-                          {/* LinkedIn Profile Button */}
-                          {data.resumeLink && 'url' in data.resumeLink && data.resumeLink.url && (
-                            <Button asChild size="xl">
-                              <a
-                                href={data.resumeLink.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group"
-                              >
-                                <ExternalLink className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                                My LinkedIn Profile
-                              </a>
-                            </Button>
-                          )}
-                          {/* Other Social Links */}
-                          {data.socialLinks && data.socialLinks.map((social, idx: number) => (
+                          {data.socialLinks.map((social, idx: number) => (
                             social.url && 'url' in social.url && social.url.url && (
                               <Button key={idx} asChild size="xl">
                                 <a

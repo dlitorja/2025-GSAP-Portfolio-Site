@@ -166,7 +166,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Post Content */}
         {data.content && (
           <ScrollReveal direction="up" delay={0.1}>
-            <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
+            <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none [&>p]:mb-6 [&>p]:leading-relaxed [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:my-4 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:ml-6 [&>ol]:my-4 [&>ol]:space-y-2 [&>h1]:text-3xl [&>h1]:font-bold [&>h1]:mt-8 [&>h1]:mb-4 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:mt-6 [&>h2]:mb-3 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:mt-4 [&>h3]:mb-2">
               <PrismicRichText field={data.content} />
             </div>
           </ScrollReveal>
