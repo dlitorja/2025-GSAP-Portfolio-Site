@@ -258,7 +258,7 @@ export default async function AboutPage() {
                                 </CardHeader>
                                 {exp.description && (
                                   <CardContent>
-                                    <div className="prose prose-neutral dark:prose-invert prose-sm max-w-none">
+                                    <div className="prose prose-neutral dark:prose-invert prose-sm max-w-none [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:space-y-1 [&_li]:text-muted-foreground [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:space-y-1">
                                       <PrismicRichText field={exp.description} />
                                     </div>
                                   </CardContent>
