@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
+import { ScrollReveal } from '@/components/scroll-reveal'
+import { GalleryImages } from '@/components/gallery-images'
 import { ArrowLeft, Calendar, MapPin, Play, Image as ImageIcon } from 'lucide-react'
 import { GalleryDocument } from '@/types/prismic'
 
@@ -49,6 +50,66 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
   const { data } = item
   const mediaType = data.mediaType || 'Single Image'
   const category = data.category || 'Mixed Media'
+
+  // Extract all images for the lightbox
+  const extractImages = () => {
+    const images: Array<{ url: string; alt: string; caption?: string }> = []
+    
+    // Extract from imageGallery
+    if (data.imageGallery) {
+      let galleryArray: any[] = []
+      if (Array.isArray(data.imageGallery)) {
+        galleryArray = data.imageGallery
+      } else {
+        galleryArray = [data.imageGallery]
+      }
+      
+      galleryArray.forEach((galleryItem: any) => {
+        const image = galleryItem.image || galleryItem.galleryImage || galleryItem
+        if (image?.url) {
+          images.push({
+            url: image.url,
+            alt: image.alt || galleryItem.caption || galleryItem.imageCaption || data.title || 'Gallery image',
+            caption: galleryItem.caption || galleryItem.imageCaption,
+          })
+        }
+      })
+    }
+    
+    // Add single image if no gallery images found
+    if (images.length === 0 && data.singleImage?.url) {
+      images.push({
+        url: data.singleImage.url,
+        alt: data.singleImage.alt || data.title || 'Gallery image',
+      })
+    }
+    
+    // Add featured image as fallback if still no images
+    if (images.length === 0 && data.featuredImage?.url) {
+      images.push({
+        url: data.featuredImage.url,
+        alt: data.featuredImage.alt || data.title || 'Gallery image',
+      })
+    }
+    
+    return images
+  }
+
+  const allImages = extractImages()
+
+  // Debug: Log what we're receiving (remove in production)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Gallery Item Data:', {
+      uid: item.uid,
+      title: data.title,
+      mediaType,
+      hasImageGallery: !!data.imageGallery,
+      imageGalleryLength: Array.isArray(data.imageGallery) ? data.imageGallery.length : 0,
+      hasSingleImage: !!data.singleImage?.url,
+      totalImagesExtracted: allImages.length,
+      imageGallery: data.imageGallery,
+    })
+  }
 
   return (
     <div className="container mx-auto px-4 py-20">
@@ -125,40 +186,37 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
 
         {/* Media Content */}
         <ScrollReveal direction="fade" delay={0.2}>
-          {/* Single Image */}
-          {mediaType === 'Single Image' && data.singleImage?.url && (
+          {/* Image Gallery - Show all images with lightbox */}
+          {allImages.length > 0 && <GalleryImages images={allImages} />}
+          
+          {(!data.imageGallery || 
+            (Array.isArray(data.imageGallery) && data.imageGallery.length === 0) ||
+            (!Array.isArray(data.imageGallery) && !data.imageGallery)) && 
+           process.env.NODE_ENV === 'development' && (
+            <div className="mb-12 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+              <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                <strong>Debug Info:</strong> No image gallery found. 
+                Media Type: {mediaType || 'Not set'}. 
+                Has imageGallery field: {data.imageGallery ? 'Yes' : 'No'}. 
+                ImageGallery is array: {Array.isArray(data.imageGallery) ? 'Yes' : 'No'}. 
+                ImageGallery length: {Array.isArray(data.imageGallery) ? data.imageGallery.length : 'N/A'}.
+              </p>
+              <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-2">
+                Make sure you've added images to the &quot;Image Gallery&quot; field in Prismic and published the document.
+              </p>
+            </div>
+          )}
+
+          {/* Single Image - Only show if no image gallery exists */}
+          {(!data.imageGallery || !Array.isArray(data.imageGallery) || data.imageGallery.length === 0) &&
+           mediaType === 'Single Image' && 
+           data.singleImage?.url && (
             <div className="mb-12 rounded-lg overflow-hidden shadow-2xl ring-1 ring-border">
               <img
                 src={data.singleImage.url}
                 alt={data.singleImage.alt || data.title || 'Gallery image'}
                 className="w-full h-auto"
               />
-            </div>
-          )}
-
-          {/* Image Gallery */}
-          {mediaType === 'Image Gallery' && data.imageGallery && data.imageGallery.length > 0 && (
-            <div className="mb-12">
-              <ScrollStagger staggerDelay={0.1}>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {data.imageGallery.map((galleryItem: any, idx: number) => (
-                    galleryItem.image?.url && (
-                      <div key={idx} className="rounded-lg overflow-hidden shadow-lg ring-1 ring-border hover:shadow-xl transition-shadow duration-300">
-                        <img
-                          src={galleryItem.image.url}
-                          alt={galleryItem.image.alt || galleryItem.caption || `Gallery image ${idx + 1}`}
-                          className="w-full h-auto"
-                        />
-                        {galleryItem.caption && (
-                          <div className="p-4 bg-muted">
-                            <p className="text-sm text-muted-foreground">{galleryItem.caption}</p>
-                          </div>
-                        )}
-                      </div>
-                    )
-                  ))}
-                </div>
-              </ScrollStagger>
             </div>
           )}
 
@@ -239,29 +297,10 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
               )}
 
               {/* Image Gallery if exists */}
-              {data.imageGallery && data.imageGallery.length > 0 && (
+              {allImages.length > 0 && (
                 <div>
                   <h2 className="text-2xl font-bold mb-6">Images</h2>
-                  <ScrollStagger staggerDelay={0.1}>
-                    <div className="grid gap-6 md:grid-cols-2">
-                      {data.imageGallery.map((galleryItem: any, idx: number) => (
-                        galleryItem.image?.url && (
-                          <div key={idx} className="rounded-lg overflow-hidden shadow-lg ring-1 ring-border hover:shadow-xl transition-shadow duration-300">
-                            <img
-                              src={galleryItem.image.url}
-                              alt={galleryItem.image.alt || galleryItem.caption || `Gallery image ${idx + 1}`}
-                              className="w-full h-auto"
-                            />
-                            {galleryItem.caption && (
-                              <div className="p-4 bg-muted">
-                                <p className="text-sm text-muted-foreground">{galleryItem.caption}</p>
-                              </div>
-                            )}
-                          </div>
-                        )
-                      ))}
-                    </div>
-                  </ScrollStagger>
+                  <GalleryImages images={allImages} />
                 </div>
               )}
 

@@ -28,7 +28,7 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 
 ## 🆕 Recent Updates (December 2025)
 
-### Gallery Page Implementation ✅
+### Gallery Enhancements ✅
 - ✅ Created Gallery custom type in Prismic for photography and videography
 - ✅ Gallery listing page with responsive grid layout
 - ✅ Gallery detail pages supporting multiple media types:
@@ -38,6 +38,15 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ Category system (Photography, Videography, Mixed Media)
 - ✅ Tags, location, and date metadata
 - ✅ Added Gallery link to navigation (between About and Projects)
+- ✅ **Gallery page restructured** - Photography and Videography displayed side by side in two columns
+- ✅ **Image gallery display fixed** - Prioritizes imageGallery field regardless of mediaType setting
+- ✅ **Created /gallery/photos page** - Dedicated page showing all photos from all gallery items
+- ✅ **Image lightbox component** - Full-screen image viewer with:
+  - Keyboard navigation (arrow keys, escape)
+  - Click outside to close
+  - Image counter and captions
+  - Responsive scaling
+- ✅ **Fixed embedded video containers** - Vimeo/YouTube embeds now fill their containers properly
 
 ### Video Background Feature ✅
 - ✅ Added video background support to Site Settings
@@ -51,6 +60,9 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ Section headings ("Featured Work", "Latest Articles") now turn white when background is present
 - ✅ "View All" buttons adapt to background presence
 - ✅ Improved contrast and readability across all themes
+- ✅ **Added "My Content" button** to hero section linking to Gallery page
+- ✅ **Bot protection on contact page** - Email address hidden until visitor confirms they're not a robot
+- ✅ **Enhanced gallery images component** - Reusable component with lightbox integration
 
 ---
 
@@ -90,7 +102,10 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
 - ✅ Footer with social links - **Prismic-powered** (`src/components/footer.tsx`)
 - ✅ Theme provider and toggle (`src/components/theme-provider.tsx`, `theme-toggle.tsx`)
 - ✅ Animated hero section - **Prismic-powered with headline, subtitle, description** (`src/components/animated-hero.tsx`)
+  - **"My Content" button added** ✅ NEW - Links to Gallery page
 - ✅ Contact form with validation (`src/components/contact-form.tsx`)
+- ✅ **Image lightbox component** ✅ NEW - Full-screen image viewer with keyboard navigation (`src/components/image-lightbox.tsx`)
+- ✅ **Gallery images component** ✅ NEW - Reusable gallery grid with lightbox integration (`src/components/gallery-images.tsx`)
 - ✅ Video embed component (`src/components/video-embed.tsx`)
 - ✅ Scroll reveal animations (`src/components/scroll-reveal.tsx`)
 - ✅ GitHub repos display (`src/components/github-repos.tsx`)
@@ -114,12 +129,13 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
   - Image galleries
   - Video embeds support
 - ✅ **Gallery pages** ✅ NEW
-  - Listing page (`src/app/gallery/page.tsx`)
-  - Detail page (`src/app/gallery/[uid]/page.tsx`)
+  - Listing page (`src/app/gallery/page.tsx`) - Photography and Videography displayed side by side
+  - Detail page (`src/app/gallery/[uid]/page.tsx`) - Enhanced image gallery display
+  - Photos page (`src/app/gallery/photos/page.tsx`) - Dedicated page for all photos
   - Prismic integration
   - Supports Photography, Videography, and Mixed Media
-  - Image galleries with captions
-  - Video embeds and uploaded videos
+  - Image galleries with captions and lightbox
+  - Video embeds and uploaded videos (properly sized containers)
   - Category filtering and tags
   - Location and date metadata
 - ✅ Blog pages
@@ -132,6 +148,7 @@ Migrate from Carrd.co to a custom Next.js portfolio site with:
   - Form with validation
   - Supabase submission
   - Success/error states
+  - **Bot protection** ✅ NEW - Email address hidden until visitor confirms they're not a robot
 
 ### 1.6 GSAP Animations ✅
 - ✅ GSAP utilities created (`src/lib/gsap-utils.ts`)
