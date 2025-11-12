@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/prismic'
+import { GalleryDocument } from '@/types/prismic'
 import { Card } from '@/components/ui/card'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { ImageLightbox } from '@/components/image-lightbox'
@@ -35,17 +36,18 @@ export default function PhotosPage() {
 
         const extractedPhotos: PhotoItem[] = []
         
-        galleryItems.forEach((item) => {
-          const mediaType = item.data.mediaType || 'Single Image'
+        galleryItems.forEach((item: any) => {
+          const itemData = item.data as GalleryDocument['data']
+          const mediaType = (itemData.mediaType as string) || 'Single Image'
           
           // Track if we found images for this item
           let itemPhotosFound = 0
           
           // Add images from image gallery FIRST (prioritize gallery over single/featured)
-          if (item.data.imageGallery) {
-            const galleryArray = Array.isArray(item.data.imageGallery) 
-              ? item.data.imageGallery 
-              : [item.data.imageGallery]
+          if (itemData.imageGallery) {
+            const galleryArray = Array.isArray(itemData.imageGallery) 
+              ? itemData.imageGallery 
+              : [itemData.imageGallery]
             
             galleryArray.forEach((galleryItem: any, idx: number) => {
               const image = galleryItem.image || galleryItem.galleryImage || galleryItem
@@ -53,10 +55,10 @@ export default function PhotosPage() {
                 extractedPhotos.push({
                   id: `${item.id}-gallery-${idx}`,
                   url: image.url,
-                  alt: image.alt || galleryItem.caption || galleryItem.imageCaption || item.data.title || `Gallery photo ${idx + 1}`,
+                  alt: image.alt || galleryItem.caption || galleryItem.imageCaption || itemData.title || `Gallery photo ${idx + 1}`,
                   galleryItemId: item.id,
                   galleryItemUid: item.uid,
-                  galleryItemTitle: item.data.title || 'Untitled',
+                  galleryItemTitle: itemData.title || 'Untitled',
                   caption: galleryItem.caption || galleryItem.imageCaption,
                 })
                 itemPhotosFound++
@@ -65,27 +67,27 @@ export default function PhotosPage() {
           }
           
           // Add single image (only if no imageGallery images found)
-          if (itemPhotosFound === 0 && mediaType === 'Single Image' && item.data.singleImage?.url) {
+          if (itemPhotosFound === 0 && mediaType === 'Single Image' && itemData.singleImage?.url) {
             extractedPhotos.push({
               id: `${item.id}-single`,
-              url: item.data.singleImage.url,
-              alt: item.data.singleImage.alt || item.data.title || 'Gallery photo',
+              url: itemData.singleImage.url,
+              alt: itemData.singleImage.alt || itemData.title || 'Gallery photo',
               galleryItemId: item.id,
               galleryItemUid: item.uid,
-              galleryItemTitle: item.data.title || 'Untitled',
+              galleryItemTitle: itemData.title || 'Untitled',
             })
             itemPhotosFound++
           }
           
           // Add featured image as fallback
-          if (itemPhotosFound === 0 && item.data.featuredImage?.url) {
+          if (itemPhotosFound === 0 && itemData.featuredImage?.url) {
             extractedPhotos.push({
               id: `${item.id}-featured`,
-              url: item.data.featuredImage.url,
-              alt: item.data.featuredImage.alt || item.data.title || 'Gallery photo',
+              url: itemData.featuredImage.url,
+              alt: itemData.featuredImage.alt || itemData.title || 'Gallery photo',
               galleryItemId: item.id,
               galleryItemUid: item.uid,
-              galleryItemTitle: item.data.title || 'Untitled',
+              galleryItemTitle: itemData.title || 'Untitled',
             })
           }
         })
