@@ -83,9 +83,9 @@ describe('Prismic Helpers', () => {
     })
 
     it('should return empty string for link field without URL', () => {
-      const linkField: prismic.LinkField = {
+      const linkField = {
         link_type: 'Document',
-      }
+      } as unknown as prismic.LinkField
 
       const result = getPrismicLinkUrl(linkField)
       expect(result).toBe('')
@@ -122,12 +122,13 @@ describe('Prismic Helpers', () => {
     })
 
     it('should handle blocks without text property', () => {
-      const richTextField: any = [
+      const richTextField: prismic.RichTextField = [
         {
           type: 'paragraph',
+          text: '',
           spans: [],
         },
-      ]
+      ] as prismic.RichTextField
 
       const result = getPrismicRichText(richTextField)
       expect(result).toBe('')

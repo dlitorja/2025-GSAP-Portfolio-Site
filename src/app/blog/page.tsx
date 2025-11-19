@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { Calendar, Clock } from 'lucide-react'
+import * as prismic from '@prismicio/client'
+import { BlogPostDocument } from '@/types/prismic'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -14,10 +16,15 @@ export const metadata: Metadata = {
 // Enable ISR - regenerate page every 60 seconds
 export const revalidate = 60
 
-function estimateReadingTime(richText: any[]): number {
-  if (!richText) return 5
+function estimateReadingTime(richText: prismic.RichTextField | undefined): number {
+  if (!richText || !Array.isArray(richText)) return 5
   
-  const text = richText.map(block => block.text).join(' ')
+  const text = richText.map((block) => {
+    if (block && typeof block === 'object' && 'text' in block && typeof block.text === 'string') {
+      return block.text
+    }
+    return ''
+  }).join(' ')
   const wordsPerMinute = 200
   const wordCount = text.split(/\s+/).length
   return Math.ceil(wordCount / wordsPerMinute) || 5
@@ -26,17 +33,18 @@ function estimateReadingTime(richText: any[]): number {
 export default async function BlogPage() {
   const client = createClient()
   
-  let posts: any[] = []
+  let posts: BlogPostDocument[] = []
   
   try {
     const response = await client.getAllByType('blog_post' as any, {
       orderings: [{ field: 'my.blog_post.publishDate', direction: 'desc' }],
     })
-    posts = response
-  } catch (error: any) {
+    posts = response as unknown as BlogPostDocument[]
+  } catch (error: unknown) {
     // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
+    const isNotFoundError = (error && typeof error === 'object' && 'name' in error && error.name === 'NotFoundError') ||
+                           (error && typeof error === 'object' && 'message' in error && 
+                            typeof error.message === 'string' && error.message.includes('No documents were returned'))
     if (!isNotFoundError) {
       console.error('Error fetching blog posts from Prismic:', error)
     }
@@ -82,7 +90,7 @@ export default async function BlogPage() {
                             <div className="aspect-video md:aspect-square overflow-hidden md:rounded-l-lg relative">
                               <img
                                 src={post.data.featuredImage.url}
-                                alt={post.data.featuredImage.alt || post.data.title}
+                                alt={post.data.featuredImage.alt || post.data.title || 'Blog post image'}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -117,12 +125,14 @@ export default async function BlogPage() {
                           <CardContent>
                             {post.data.excerpt && (
                               <CardDescription className="text-base mb-4 line-clamp-3">
-                                {post.data.excerpt[0]?.text || ''}
+                                {post.data.excerpt[0] && 'text' in post.data.excerpt[0] 
+                                  ? post.data.excerpt[0].text 
+                                  : ''}
                               </CardDescription>
                             )}
                             {post.data.tags && post.data.tags.length > 0 && (
                               <div className="flex gap-2 flex-wrap mb-4">
-                                {post.data.tags.slice(0, 3).map((tagItem: any, idx: number) => (
+                                {post.data.tags.slice(0, 3).map((tagItem, idx: number) => (
                                   <Badge key={idx} variant="outline" className="text-xs">
                                     {tagItem.tag}
                                   </Badge>

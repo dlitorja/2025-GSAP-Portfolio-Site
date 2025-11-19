@@ -20,15 +20,19 @@ git add .
 
 # Commit with descriptive message
 echo "💾 Committing changes..."
-git commit -m "Add Cloudflare Turnstile and GitHub Actions CI/CD
+git commit -m "Add Cloudflare Turnstile, GitHub Actions CI/CD, and fix TypeScript errors
 
 - Add CloudflareTurnstile React component for email protection
 - Integrate Turnstile into contact page email component
 - Add server-side token verification API route
 - Replace simple checkbox with Turnstile bot protection
 - Add GitHub Actions workflows for CI/CD (test, lint, build, type-check)
-- Add setup documentation for Turnstile and GitHub Actions
-- Update package.json with new scripts (lint:fix, type-check, test:ci)"
+- Fix all TypeScript errors (KeyTextField null handling, RichTextField type guards)
+- Add id property to all Prismic document types
+- Fix Prismic content type assertions
+- Add comprehensive TypeScript error prevention guide
+- Update package.json with new scripts (lint:fix, type-check, test:ci)
+- Add setup documentation for Turnstile and GitHub Actions"
 
 # Check if remote exists
 if ! git remote | grep -q "^origin$"; then

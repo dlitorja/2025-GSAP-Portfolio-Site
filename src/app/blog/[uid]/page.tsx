@@ -10,15 +10,21 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react'
 import { BlogPostDocument } from '@/types/prismic'
+import * as prismic from '@prismicio/client'
 
 interface BlogPostPageProps {
   params: Promise<{ uid: string }>
 }
 
-function estimateReadingTime(richText: any[]): number {
-  if (!richText) return 5
+function estimateReadingTime(richText: prismic.RichTextField | undefined): number {
+  if (!richText || !Array.isArray(richText)) return 5
   
-  const text = richText.map(block => block.text).join(' ')
+  const text = richText.map((block) => {
+    if (block && typeof block === 'object' && 'text' in block && typeof block.text === 'string') {
+      return block.text
+    }
+    return ''
+  }).join(' ')
   const wordsPerMinute = 200
   const wordCount = text.split(/\s+/).length
   return Math.ceil(wordCount / wordsPerMinute) || 5
@@ -87,7 +93,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Tags */}
             {data.tags && data.tags.length > 0 && (
               <div className="flex gap-2 flex-wrap mb-6">
-                {data.tags.map((tagItem: any, idx: number) => (
+                {data.tags.map((tagItem, idx: number) => (
                   <Badge key={idx} variant="secondary" className="text-sm">
                     {tagItem.tag}
                   </Badge>

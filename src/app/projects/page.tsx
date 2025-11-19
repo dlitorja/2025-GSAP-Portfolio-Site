@@ -68,7 +68,7 @@ export default async function ProjectsPage() {
                       <div className="aspect-video overflow-hidden rounded-t-lg relative">
                         <img
                           src={project.data.featuredImage.url}
-                          alt={project.data.featuredImage.alt || project.data.title}
+                          alt={project.data.featuredImage.alt || project.data.title || 'Project image'}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -80,7 +80,9 @@ export default async function ProjectsPage() {
                       </CardTitle>
                       {project.data.description && (
                         <CardDescription className="line-clamp-2">
-                          {project.data.description[0]?.text || ''}
+                          {project.data.description[0] && 'text' in project.data.description[0]
+                            ? project.data.description[0].text
+                            : ''}
                         </CardDescription>
                       )}
                     </CardHeader>

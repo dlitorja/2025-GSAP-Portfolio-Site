@@ -186,7 +186,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       <div key={idx} className="rounded-lg overflow-hidden shadow-lg ring-1 ring-border hover:shadow-xl transition-shadow duration-300">
                         <img
                           src={item.image.url}
-                          alt={item.image.alt || item.caption || `Gallery image ${idx + 1}`}
+                          alt={item.image.alt || item.caption || `Gallery image ${idx + 1}` || 'Project gallery image'}
                           className="w-full h-auto"
                         />
                         {item.caption && (

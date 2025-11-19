@@ -38,7 +38,7 @@ describe('Contact API Route', () => {
     process.env.RESEND_API_KEY = 'test-resend-key'
   })
 
-  const createMockRequest = (body: any) => {
+  const createMockRequest = (body: { name: string; email: string; message: string }) => {
     return new NextRequest('http://localhost:3000/api/contact', {
       method: 'POST',
       headers: {

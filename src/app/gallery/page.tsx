@@ -107,7 +107,9 @@ export default async function GalleryPage() {
             
             {item.data.description && (
               <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                {item.data.description[0]?.text || ''}
+                {item.data.description[0] && 'text' in item.data.description[0]
+                  ? item.data.description[0].text
+                  : ''}
               </p>
             )}
             

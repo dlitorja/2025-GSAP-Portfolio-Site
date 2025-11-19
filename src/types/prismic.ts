@@ -26,6 +26,7 @@ export interface SiteSettingsDocument {
 
 // Project Type
 export interface ProjectDocument {
+  id: string
   uid: string
   data: {
     title: prismic.KeyTextField
@@ -56,6 +57,7 @@ export interface ProjectDocument {
 
 // Blog Post Type
 export interface BlogPostDocument {
+  id: string
   uid: string
   data: {
     title: prismic.KeyTextField
@@ -98,6 +100,7 @@ export interface AboutDocument {
 
 // Gallery Type
 export interface GalleryDocument {
+  id: string
   uid: string
   data: {
     title: prismic.KeyTextField
