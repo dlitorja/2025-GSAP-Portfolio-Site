@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { Calendar, MapPin, Play, Image as ImageIcon } from 'lucide-react'
+import { GalleryDocument } from '@/types/prismic'
 
 export const metadata: Metadata = {
   title: 'Gallery',
@@ -18,17 +19,19 @@ export const revalidate = 60
 export default async function GalleryPage() {
   const client = createClient()
   
-  let galleryItems: any[] = []
+  let galleryItems: GalleryDocument[] = []
   
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await client.getAllByType('gallery' as any, {
       orderings: [{ field: 'my.gallery.date', direction: 'desc' }],
     })
-    galleryItems = response
-  } catch (error: any) {
+    galleryItems = response as unknown as GalleryDocument[]
+  } catch (error: unknown) {
     // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
+    const isNotFoundError = (error && typeof error === 'object' && 'name' in error && error.name === 'NotFoundError') ||
+                           (error && typeof error === 'object' && 'message' in error && 
+                            typeof error.message === 'string' && error.message.includes('No documents were returned'))
     if (!isNotFoundError) {
       console.error('Error fetching gallery items from Prismic:', error)
     }
@@ -41,7 +44,7 @@ export default async function GalleryPage() {
     item.data.category !== 'Photography' && item.data.category !== 'Videography'
   )
 
-  const renderGalleryItem = (item: any) => {
+  const renderGalleryItem = (item: GalleryDocument) => {
     const featuredImage = item.data.featuredImage?.url
     const mediaType = item.data.mediaType
     const isVideo = mediaType === 'Single Video' || mediaType === 'Video Gallery' || mediaType === 'Mixed Media'
@@ -137,7 +140,7 @@ export default async function GalleryPage() {
             {/* Tags */}
             {item.data.tags && item.data.tags.length > 0 && (
               <div className="flex gap-1 flex-wrap">
-                {item.data.tags.slice(0, 3).map((tagItem: any, idx: number) => (
+                {item.data.tags.slice(0, 3).map((tagItem, idx: number) => (
                   <Badge key={idx} variant="outline" className="text-xs">
                     {tagItem.tag}
                   </Badge>

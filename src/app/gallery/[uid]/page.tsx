@@ -186,7 +186,7 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
             {/* Tags */}
             {data.tags && data.tags.length > 0 && (
               <div className="flex gap-2 flex-wrap">
-                {data.tags.map((tagItem: any, idx: number) => (
+                {data.tags.map((tagItem, idx: number) => (
                   <Badge key={idx} variant="outline" className="text-sm">
                     {tagItem.tag}
                   </Badge>
@@ -216,7 +216,7 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
                 ImageGallery length: {Array.isArray(data.imageGallery) ? data.imageGallery.length : 'N/A'}.
               </p>
               <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-2">
-                Make sure you've added images to the &quot;Image Gallery&quot; field in Prismic and published the document.
+                Make sure you&apos;ve added images to the &quot;Image Gallery&quot; field in Prismic and published the document.
               </p>
             </div>
           )}
@@ -262,7 +262,7 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
           {/* Video Gallery */}
           {mediaType === 'Video Gallery' && data.videoGallery && data.videoGallery.length > 0 && (
             <div className="mb-12 space-y-8">
-              {data.videoGallery.map((video: any, idx: number) => (
+              {data.videoGallery.map((video, idx: number) => (
                 <Card key={idx} className="p-4 shadow-lg">
                   {video.videoTitle && (
                     <h3 className="text-xl font-semibold mb-2">{video.videoTitle}</h3>
@@ -353,7 +353,7 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
                 <div>
                   <h2 className="text-2xl font-bold mb-6">Videos</h2>
                   <div className="space-y-8">
-                    {data.videoGallery.map((video: any, idx: number) => (
+                    {data.videoGallery.map((video, idx: number) => (
                       <Card key={idx} className="p-4 shadow-lg">
                         {video.videoTitle && (
                           <h3 className="text-xl font-semibold mb-2">{video.videoTitle}</h3>
@@ -416,6 +416,7 @@ export async function generateStaticParams() {
   const client = createClient()
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const items = await client.getAllByType('gallery' as any)
     return items.map((item) => ({
       uid: item.uid,

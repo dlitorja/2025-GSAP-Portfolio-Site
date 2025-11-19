@@ -29,10 +29,11 @@ git commit -m "Add Cloudflare Turnstile, GitHub Actions CI/CD, and fix all TypeS
 - Add GitHub Actions workflows for CI/CD (test, lint, build, type-check)
 - Fix all TypeScript errors (KeyTextField null handling, RichTextField type guards)
 - Fix all ESLint errors (any types, HTML entity escaping)
-- Add id property to all Prismic document types
-- Fix Prismic content type assertions with proper eslint-disable comments
+- Fix gallery page TypeScript errors (GalleryDocument types, error handling)
 - Fix gallery array typing with proper GalleryItem type
 - Fix KeyTextField null handling in caption fields
+- Add id property to all Prismic document types
+- Fix Prismic content type assertions with proper eslint-disable comments
 - Add comprehensive TypeScript error prevention guide
 - Update package.json with new scripts (lint:fix, type-check, test:ci)
 - Add setup documentation for Turnstile and GitHub Actions"
