@@ -52,7 +52,7 @@ export default function ContactPage() {
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Have a project in mind or just want to chat? I'd love to hear from you.
+              Have a project in mind or just want to chat? I&apos;d love to hear from you.
             </p>
           </div>
         </ScrollReveal>
@@ -65,7 +65,7 @@ export default function ContactPage() {
                 <CardHeader>
                   <CardTitle className="text-2xl">Send a Message</CardTitle>
                   <CardDescription className="text-base">
-                    Fill out the form below and I'll get back to you as soon as possible.
+                    Fill out the form below and I&apos;ll get back to you as soon as possible.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -105,7 +105,7 @@ export default function ContactPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                      To protect against spam, please verify you're human to reveal the email address.
+                      To protect against spam, please verify you&apos;re human to reveal the email address.
                     </p>
                     {turnstileSiteKey ? (
                       <div className="flex flex-col items-center space-y-3">

@@ -36,6 +36,7 @@ export default async function BlogPage() {
   let posts: BlogPostDocument[] = []
   
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await client.getAllByType('blog_post' as any, {
       orderings: [{ field: 'my.blog_post.publishDate', direction: 'desc' }],
     })

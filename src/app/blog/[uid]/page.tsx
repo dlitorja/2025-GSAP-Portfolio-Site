@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const client = createClient()
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const post = await client.getByUID('blog_post' as any, uid) as unknown as BlogPostDocument
     const excerptText = post.data.excerpt?.[0] && 'text' in post.data.excerpt[0] 
       ? post.data.excerpt[0].text 
@@ -66,6 +67,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   let post: BlogPostDocument | null = null
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     post = await client.getByUID('blog_post' as any, uid) as unknown as BlogPostDocument
   } catch {
     notFound()
@@ -201,6 +203,7 @@ export async function generateStaticParams() {
   const client = createClient()
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const posts = await client.getAllByType('blog_post' as any)
     return posts.map((post) => ({
       uid: post.uid,

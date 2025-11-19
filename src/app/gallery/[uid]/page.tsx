@@ -12,6 +12,7 @@ import { ScrollReveal } from '@/components/scroll-reveal'
 import { GalleryImages } from '@/components/gallery-images'
 import { ArrowLeft, Calendar, MapPin, Play, Image as ImageIcon } from 'lucide-react'
 import { GalleryDocument } from '@/types/prismic'
+import * as prismic from '@prismicio/client'
 
 interface GalleryPageProps {
   params: Promise<{ uid: string }>
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }: GalleryPageProps): Promise<Me
   const client = createClient()
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item = await client.getByUID('gallery' as any, uid) as unknown as GalleryDocument
     const descriptionText = item.data.description?.[0] && 'text' in item.data.description[0]
       ? item.data.description[0].text
@@ -46,6 +48,7 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
 
   let item: GalleryDocument | null = null
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     item = await client.getByUID('gallery' as any, uid) as unknown as GalleryDocument
   } catch {
     notFound()
@@ -61,20 +64,27 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
     
     // Extract from imageGallery
     if (data.imageGallery) {
-      let galleryArray: any[] = []
+      type GalleryItem = { 
+        image?: prismic.ImageField
+        caption?: prismic.KeyTextField
+        imageCaption?: prismic.KeyTextField
+        galleryImage?: prismic.ImageField
+      }
+      let galleryArray: GalleryItem[] = []
       if (Array.isArray(data.imageGallery)) {
-        galleryArray = data.imageGallery
+        galleryArray = data.imageGallery as GalleryItem[]
       } else {
-        galleryArray = [data.imageGallery]
+        galleryArray = [data.imageGallery as GalleryItem]
       }
       
-      galleryArray.forEach((galleryItem: any) => {
-        const image = galleryItem.image || galleryItem.galleryImage || galleryItem
-        if (image?.url) {
+      galleryArray.forEach((galleryItem: GalleryItem) => {
+        const image = galleryItem.image || galleryItem.galleryImage || (galleryItem as unknown as prismic.ImageField)
+        if (image && 'url' in image && image.url) {
+          const captionValue = galleryItem.caption || galleryItem.imageCaption
           images.push({
             url: image.url,
             alt: image.alt || galleryItem.caption || galleryItem.imageCaption || data.title || 'Gallery image',
-            caption: galleryItem.caption || galleryItem.imageCaption,
+            caption: captionValue ? String(captionValue) : undefined,
           })
         }
       })
