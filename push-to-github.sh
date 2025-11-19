@@ -20,13 +20,15 @@ git add .
 
 # Commit with descriptive message
 echo "💾 Committing changes..."
-git commit -m "Add Cloudflare Turnstile implementation for email protection
+git commit -m "Add Cloudflare Turnstile and GitHub Actions CI/CD
 
-- Add CloudflareTurnstile React component
+- Add CloudflareTurnstile React component for email protection
 - Integrate Turnstile into contact page email component
 - Add server-side token verification API route
 - Replace simple checkbox with Turnstile bot protection
-- Add setup documentation"
+- Add GitHub Actions workflows for CI/CD (test, lint, build, type-check)
+- Add setup documentation for Turnstile and GitHub Actions
+- Update package.json with new scripts (lint:fix, type-check, test:ci)"
 
 # Check if remote exists
 if ! git remote | grep -q "^origin$"; then
