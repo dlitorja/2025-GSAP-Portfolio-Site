@@ -138,6 +138,8 @@ export default async function RootLayout({
             instagramUrl={instagramUrl}
           />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
