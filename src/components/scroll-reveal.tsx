@@ -50,10 +50,8 @@ export function ScrollReveal({
     if (!ref.current) return
 
     const element = ref.current
-
-    // Don't set GSAP initial state if inline styles are already applied
-    // The inline styles from getInitialStyle() handle the initial state
-    // GSAP will animate from the inline styles to the final state
+    let animation: gsap.core.Tween | null = null
+    let scrollTrigger: ScrollTrigger | null = null
 
     // Set initial state in GSAP to match inline styles (for GSAP to track)
     const initialState: gsap.TweenVars = {
@@ -80,7 +78,7 @@ export function ScrollReveal({
     }
 
     // Use fromTo to respect inline styles - don't override them
-    gsap.fromTo(
+    animation = gsap.fromTo(
       element,
       initialState, // From state (matches inline styles)
       {
@@ -99,6 +97,12 @@ export function ScrollReveal({
         },
       }
     )
+    
+    // Get the ScrollTrigger instance from the animation
+    const triggerId = (animation.vars as any).scrollTrigger
+    if (triggerId) {
+      scrollTrigger = ScrollTrigger.getById(triggerId) || null
+    }
 
     // Refresh ScrollTrigger after a brief delay to ensure all elements are positioned
     const refreshTimer = setTimeout(() => {
@@ -107,6 +111,17 @@ export function ScrollReveal({
 
     return () => {
       clearTimeout(refreshTimer)
+      
+      // Properly kill animation and scroll trigger
+      if (animation) {
+        animation.kill()
+      }
+      
+      if (scrollTrigger) {
+        scrollTrigger.kill()
+      }
+      
+      // Fallback: kill any remaining triggers for this element
       ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.trigger === element) {
           trigger.kill()
@@ -138,6 +153,8 @@ export function ScrollStagger({ children, staggerDelay = 0.1, className = '' }: 
 
     const element = ref.current
     const items = Array.from(element.children) as HTMLElement[]
+    let animation: gsap.core.Tween | null = null
+    let scrollTrigger: ScrollTrigger | null = null
 
     // Set initial styles immediately to prevent flash
     items.forEach((item) => {
@@ -155,7 +172,7 @@ export function ScrollStagger({ children, staggerDelay = 0.1, className = '' }: 
       })
     })
 
-    gsap.to(items, {
+    animation = gsap.to(items, {
       opacity: 1,
       y: 0,
       duration: 0.8,
@@ -167,8 +184,24 @@ export function ScrollStagger({ children, staggerDelay = 0.1, className = '' }: 
         toggleActions: 'play none none none',
       },
     })
+    
+    // Get the ScrollTrigger instance from the animation
+    const triggerId = (animation.vars as any).scrollTrigger
+    if (triggerId) {
+      scrollTrigger = ScrollTrigger.getById(triggerId) || null
+    }
 
     return () => {
+      // Properly kill animation and scroll trigger
+      if (animation) {
+        animation.kill()
+      }
+      
+      if (scrollTrigger) {
+        scrollTrigger.kill()
+      }
+      
+      // Fallback: kill any remaining triggers for this element
       ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.trigger === element) {
           trigger.kill()

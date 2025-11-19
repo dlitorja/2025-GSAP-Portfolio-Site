@@ -4,10 +4,12 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import { createClient } from "@/lib/prismic";
+import { getSiteSettings, getPrismicLinkUrl } from "@/lib/prismic-helpers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import { SiteSettingsDocument } from "@/types/prismic";
+
+// Enable ISR - regenerate layout every 60 seconds
+export const revalidate = 60;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,19 +23,7 @@ const geistMono = Geist_Mono({
 
 // Generate metadata dynamically from Prismic
 export async function generateMetadata(): Promise<Metadata> {
-  const client = createClient()
-  let siteSettings: SiteSettingsDocument | null = null
-  
-  try {
-    siteSettings = await client.getSingle('site_settings') as unknown as SiteSettingsDocument
-  } catch (error: any) {
-    // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
-    if (!isNotFoundError) {
-      console.error('Failed to fetch site settings for metadata:', error)
-    }
-  }
+  const siteSettings = await getSiteSettings()
 
   // Fallback values
   const siteTitle = siteSettings?.data.site_title || "Dustin Litorja"
@@ -93,28 +83,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch site settings for navigation
-  const client = createClient()
-  let siteSettings: SiteSettingsDocument | null = null
-  
-  try {
-    siteSettings = await client.getSingle('site_settings') as unknown as SiteSettingsDocument
-  } catch (error: any) {
-    // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
-    if (!isNotFoundError) {
-      console.error('Failed to fetch site settings:', error)
-    }
-  }
+  // Fetch site settings for navigation (centralized, cached, and type-safe)
+  const siteSettings = await getSiteSettings()
 
   const siteTitle = siteSettings?.data.site_title || 'Dustin Litorja'
   const footerTagline = siteSettings?.data.footer_tagline || 'Creative developer and designer crafting beautiful digital experiences with modern web technologies.'
   const footerText = siteSettings?.data.footer_text || ''
-  const githubUrl = (siteSettings?.data.github_url && 'url' in siteSettings.data.github_url) ? siteSettings.data.github_url.url : ''
-  const linkedinUrl = (siteSettings?.data.linkedin_url && 'url' in siteSettings.data.linkedin_url) ? siteSettings.data.linkedin_url.url : ''
-  const twitterUrl = (siteSettings?.data.twitter_url && 'url' in siteSettings.data.twitter_url) ? siteSettings.data.twitter_url.url : ''
-  const instagramUrl = (siteSettings?.data.instagram_url && 'url' in siteSettings.data.instagram_url) ? siteSettings.data.instagram_url.url : ''
+  const githubUrl = getPrismicLinkUrl(siteSettings?.data.github_url)
+  const linkedinUrl = getPrismicLinkUrl(siteSettings?.data.linkedin_url)
+  const twitterUrl = getPrismicLinkUrl(siteSettings?.data.twitter_url)
+  const instagramUrl = getPrismicLinkUrl(siteSettings?.data.instagram_url)
   const hasHomepageBackground = !!siteSettings?.data.homepage_background_image?.url
   
   return (

@@ -150,22 +150,6 @@ export default async function AboutPage() {
                             </div>
                           </ScrollReveal>
                         )}
-                        {data.resumeLink && 'url' in data.resumeLink && data.resumeLink.url && (
-                          <ScrollReveal direction="up" delay={0.5}>
-                            <div className="flex gap-4 mt-8">
-                              <Button asChild size="lg">
-                                <a
-                                  href={data.resumeLink.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  <ExternalLink className="mr-2 h-4 w-4" />
-                                  My LinkedIn Profile
-                                </a>
-                              </Button>
-                            </div>
-                          </ScrollReveal>
-                        )}
                       </div>
                     </div>
                   </ScrollReveal>
@@ -175,17 +159,17 @@ export default async function AboutPage() {
                     <ScrollReveal direction="up" delay={0.2}>
                       <div className="mb-16">
                         <h2 className="text-2xl md:text-3xl font-bold mb-6">Connect</h2>
-                        <div className="flex gap-3 flex-wrap">
+                        <div className="flex gap-4 flex-wrap">
                           {data.socialLinks.map((social, idx: number) => (
                             social.url && 'url' in social.url && social.url.url && (
-                              <Button key={idx} asChild variant="outline" size="lg">
+                              <Button key={idx} asChild size="lg" className="text-base px-6 py-6 h-auto font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                                 <a
                                   href={social.url.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="group"
                                 >
-                                  <ExternalLink className="mr-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                                  <ExternalLink className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                                   {social.platform || 'Link'}
                                 </a>
                               </Button>

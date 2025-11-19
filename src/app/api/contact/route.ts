@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { submitContactForm } from '@/lib/supabase'
 import { z } from 'zod'
 import { Resend } from 'resend'
+import { checkRateLimit, getClientIP } from '@/lib/rate-limit'
 
 // Initialize Resend only if API key is present
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
@@ -14,6 +15,28 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting - check before processing
+    const clientIP = getClientIP(request)
+    const rateLimit = checkRateLimit(clientIP)
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please try again later.',
+          retryAfter: Math.ceil((rateLimit.resetTime - Date.now()) / 1000)
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': Math.ceil((rateLimit.resetTime - Date.now()) / 1000).toString(),
+            'X-RateLimit-Limit': '5',
+            'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+            'X-RateLimit-Reset': new Date(rateLimit.resetTime).toISOString(),
+          }
+        }
+      )
+    }
+
     const body = await request.json()
 
     // Validate the request body
@@ -49,7 +72,14 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: 'Contact form submitted successfully' },
-      { status: 200 }
+      { 
+        status: 200,
+        headers: {
+          'X-RateLimit-Limit': '5',
+          'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+          'X-RateLimit-Reset': new Date(rateLimit.resetTime).toISOString(),
+        }
+      }
     )
   } catch (error) {
     console.error('Error processing contact form:', error)

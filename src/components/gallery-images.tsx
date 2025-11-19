@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { ScrollStagger } from '@/components/scroll-reveal'
 import { ImageLightbox } from '@/components/image-lightbox'
 
@@ -36,11 +37,14 @@ export function GalleryImages({ images }: GalleryImagesProps) {
                 className="rounded-lg overflow-hidden shadow-lg ring-1 ring-border hover:shadow-xl transition-shadow duration-300 cursor-pointer group"
                 onClick={() => openLightbox(idx)}
               >
-                <div className="relative overflow-hidden">
-                  <img
+                <div className="relative overflow-hidden aspect-square">
+                  <Image
                     src={image.url}
                     alt={image.alt}
-                    className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    quality={85}
                   />
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">

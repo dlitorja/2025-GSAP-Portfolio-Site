@@ -28,6 +28,7 @@ type FormValues = z.infer<typeof formSchema>
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -41,6 +42,7 @@ export function ContactForm() {
   async function onSubmit(values: FormValues) {
     setIsSubmitting(true)
     setSubmitStatus('idle')
+    setErrorMessage('') // Clear any previous error
 
     try {
       const response = await fetch('/api/contact', {
@@ -54,14 +56,29 @@ export function ContactForm() {
       if (!response.ok) {
         const errorData = await response.json()
         console.error('Server error:', errorData)
-        throw new Error(errorData.details || 'Failed to submit form')
+        
+        // Handle rate limiting specifically
+        let message = ''
+        if (response.status === 429) {
+          const retryAfter = errorData.retryAfter || 900 // Default to 15 minutes
+          const minutes = Math.ceil(retryAfter / 60)
+          message = `Too many requests. Please try again in ${minutes} minute${minutes !== 1 ? 's' : ''}.`
+        } else {
+          message = errorData.error || errorData.details || 'Failed to submit form. Please try again.'
+        }
+        
+        setErrorMessage(message)
+        throw new Error(errorData.error || errorData.details || 'Failed to submit form')
       }
 
       setSubmitStatus('success')
       form.reset()
+      setErrorMessage('')
     } catch (error) {
       console.error('Error submitting form:', error)
       setSubmitStatus('error')
+      // Only set generic error if no specific error message was set
+      setErrorMessage(prev => prev || 'Something went wrong. Please try again or email me directly.')
     } finally {
       setIsSubmitting(false)
     }
@@ -131,9 +148,9 @@ export function ContactForm() {
           )}
         />
 
-        {submitStatus === 'error' && (
-          <div className="text-sm text-red-500">
-            Something went wrong. Please try again or email me directly.
+        {submitStatus === 'error' && errorMessage && (
+          <div className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 p-3 rounded-md border border-red-200 dark:border-red-800">
+            {errorMessage}
           </div>
         )}
 

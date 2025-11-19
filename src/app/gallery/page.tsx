@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/prismic'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -52,10 +53,13 @@ export default async function GalleryPage() {
           {/* Featured Image/Thumbnail */}
           {featuredImage ? (
             <div className="aspect-[4/3] overflow-hidden relative">
-              <img
+              <Image
                 src={featuredImage}
                 alt={item.data.featuredImage?.alt || item.data.title || 'Gallery item'}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                quality={85}
               />
               {/* Overlay with video indicator */}
               {isVideo && (

@@ -16,3 +16,9 @@ export const createClient = (config: prismic.ClientConfig = {}) => {
   return client
 }
 
+/**
+ * Default revalidation time for Prismic queries (60 seconds)
+ * Can be overridden per query
+ */
+export const DEFAULT_REVALIDATE = 60
+

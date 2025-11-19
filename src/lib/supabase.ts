@@ -1,13 +1,26 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase credentials not found. Contact form will not work.')
+// Fail fast in production - validate environment variables
+// Skip validation in test environment
+if (process.env.NODE_ENV !== 'test' && (!supabaseUrl || !supabaseAnonKey)) {
+  const missingVars = []
+  if (!supabaseUrl) missingVars.push('NEXT_PUBLIC_SUPABASE_URL')
+  if (!supabaseAnonKey) missingVars.push('NEXT_PUBLIC_SUPABASE_ANON_KEY')
+  
+  const errorMessage = `Missing required Supabase environment variables: ${missingVars.join(', ')}`
+  
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(errorMessage)
+  } else {
+    console.error(errorMessage)
+    console.warn('Contact form will not work without Supabase credentials.')
+  }
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseAnonKey || 'placeholder-key')
 
 // Type for contact form submission
 export interface ContactSubmission {

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { createClient } from '@/lib/prismic'
 import { PrismicRichText } from '@prismicio/react'
 import { Badge } from '@/components/ui/badge'
@@ -383,11 +384,14 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
            mediaType !== 'Single Video' &&
            mediaType !== 'Video Gallery' &&
            data.featuredImage?.url && (
-            <div className="mb-12 rounded-lg overflow-hidden shadow-2xl ring-1 ring-border">
-              <img
+            <div className="mb-12 rounded-lg overflow-hidden shadow-2xl ring-1 ring-border relative aspect-video">
+              <Image
                 src={data.featuredImage.url}
                 alt={data.featuredImage.alt || data.title || 'Gallery image'}
-                className="w-full h-auto"
+                fill
+                sizes="100vw"
+                className="object-cover"
+                quality={90}
               />
             </div>
           )}
