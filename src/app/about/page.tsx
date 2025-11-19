@@ -150,6 +150,22 @@ export default async function AboutPage() {
                             </div>
                           </ScrollReveal>
                         )}
+                        {data.resumeLink && 'url' in data.resumeLink && data.resumeLink.url && (
+                          <ScrollReveal direction="up" delay={0.5}>
+                            <div className="flex gap-4 mt-8">
+                              <Button asChild size="lg">
+                                <a
+                                  href={data.resumeLink.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <ExternalLink className="mr-2 h-4 w-4" />
+                                  My LinkedIn Profile
+                                </a>
+                              </Button>
+                            </div>
+                          </ScrollReveal>
+                        )}
                       </div>
                     </div>
                   </ScrollReveal>
@@ -162,14 +178,14 @@ export default async function AboutPage() {
                         <div className="flex gap-3 flex-wrap">
                           {data.socialLinks.map((social, idx: number) => (
                             social.url && 'url' in social.url && social.url.url && (
-                              <Button key={idx} asChild size="xl">
+                              <Button key={idx} asChild variant="outline" size="lg">
                                 <a
                                   href={social.url.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="group"
                                 >
-                                  <ExternalLink className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                                  <ExternalLink className="mr-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                                   {social.platform || 'Link'}
                                 </a>
                               </Button>
@@ -243,7 +259,7 @@ export default async function AboutPage() {
                                 </CardHeader>
                                 {exp.description && (
                                   <CardContent>
-                                    <div className="prose prose-neutral dark:prose-invert prose-sm max-w-none [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:space-y-1 [&_li]:text-muted-foreground [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:space-y-1">
+                                    <div className="prose prose-neutral dark:prose-invert prose-sm max-w-none">
                                       <PrismicRichText field={exp.description} />
                                     </div>
                                   </CardContent>

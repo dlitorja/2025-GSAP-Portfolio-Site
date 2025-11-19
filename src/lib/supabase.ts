@@ -1,17 +1,13 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-// Only create client if credentials are present
-export const supabase: SupabaseClient | null = 
-  supabaseUrl && supabaseAnonKey 
-    ? createClient(supabaseUrl, supabaseAnonKey)
-    : null
-
-if (!supabase) {
+if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('Supabase credentials not found. Contact form will not work.')
 }
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Type for contact form submission
 export interface ContactSubmission {
@@ -25,10 +21,6 @@ export interface ContactSubmission {
 
 // Helper function to submit contact form
 export async function submitContactForm(data: ContactSubmission) {
-  if (!supabase) {
-    throw new Error('Supabase is not configured')
-  }
-
   const { data: submission, error } = await supabase
     .from('contact_submissions')
     .insert([

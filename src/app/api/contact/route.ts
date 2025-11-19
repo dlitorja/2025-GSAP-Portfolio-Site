@@ -19,13 +19,8 @@ export async function POST(request: NextRequest) {
     // Validate the request body
     const validatedData = contactSchema.parse(body)
 
-    // Submit to Supabase (only if configured)
-    try {
-      await submitContactForm(validatedData)
-    } catch (supabaseError) {
-      // Log Supabase error but continue with email notification
-      console.error('Failed to save to Supabase:', supabaseError)
-    }
+    // Submit to Supabase
+    await submitContactForm(validatedData)
 
     // Send email notification via Resend (only if configured)
     if (resend) {
