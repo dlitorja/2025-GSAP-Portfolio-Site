@@ -99,6 +99,7 @@ export function ScrollReveal({
     )
     
     // Get the ScrollTrigger instance from the animation
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const triggerId = (animation.vars as any).scrollTrigger
     if (triggerId) {
       scrollTrigger = ScrollTrigger.getById(triggerId) || null
@@ -186,6 +187,7 @@ export function ScrollStagger({ children, staggerDelay = 0.1, className = '' }: 
     })
     
     // Get the ScrollTrigger instance from the animation
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const triggerId = (animation.vars as any).scrollTrigger
     if (triggerId) {
       scrollTrigger = ScrollTrigger.getById(triggerId) || null

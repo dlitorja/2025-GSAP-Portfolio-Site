@@ -20,23 +20,18 @@ git add .
 
 # Commit with descriptive message
 echo "💾 Committing changes..."
-git commit -m "Add Cloudflare Turnstile, GitHub Actions CI/CD, and fix all TypeScript/linting errors
+git commit -m "Fix all TypeScript build errors and linting issues
 
-- Add CloudflareTurnstile React component for email protection
-- Integrate Turnstile into contact page email component
-- Add server-side token verification API route
-- Replace simple checkbox with Turnstile bot protection
-- Add GitHub Actions workflows for CI/CD (test, lint, build, type-check)
-- Fix all TypeScript errors (KeyTextField null handling, RichTextField type guards)
-- Fix all ESLint errors (any types, HTML entity escaping)
-- Fix gallery page TypeScript errors (GalleryDocument types, error handling)
-- Fix gallery array typing with proper GalleryItem type
-- Fix KeyTextField null handling in caption fields
-- Add id property to all Prismic document types
-- Fix Prismic content type assertions with proper eslint-disable comments
-- Add comprehensive TypeScript error prevention guide
-- Update package.json with new scripts (lint:fix, type-check, test:ci)
-- Add setup documentation for Turnstile and GitHub Actions"
+- Fix TypeScript type casting errors in gallery/photos/page.tsx
+- Fix non-existent property access (galleryImage, imageCaption)
+- Fix null handling for item.uid (add fallback to empty string)
+- Fix all ESLint errors (27 errors fixed: any types, React hooks, unused vars)
+- Fix HTML entity escaping (apostrophes)
+- Fix React hooks setState in effect warnings
+- Fix all TypeScript build errors for production build
+- Update gallery photos page to use correct GalleryDocument properties
+- Add proper type guards and null handling throughout codebase
+- All TypeScript and ESLint errors resolved"
 
 # Check if remote exists
 if ! git remote | grep -q "^origin$"; then

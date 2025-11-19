@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ScrollReveal, ScrollStagger } from '@/components/scroll-reveal'
 import { ExternalLink, Github } from 'lucide-react'
+import { ProjectDocument } from '@/types/prismic'
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -17,17 +18,19 @@ export const revalidate = 60
 export default async function ProjectsPage() {
   const client = createClient()
   
-  let projects: any[] = []
+  let projects: ProjectDocument[] = []
   
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await client.getAllByType('project' as any, {
       orderings: [{ field: 'my.project.date', direction: 'desc' }],
     })
-    projects = response
-  } catch (error: any) {
+    projects = response as unknown as ProjectDocument[]
+  } catch (error: unknown) {
     // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
+    const isNotFoundError = (error && typeof error === 'object' && 'name' in error && error.name === 'NotFoundError') ||
+                           (error && typeof error === 'object' && 'message' in error && 
+                            typeof error.message === 'string' && error.message.includes('No documents were returned'))
     if (!isNotFoundError) {
       console.error('Error fetching projects from Prismic:', error)
     }
@@ -89,7 +92,7 @@ export default async function ProjectsPage() {
                     <CardContent>
                       {project.data.technologies && project.data.technologies.length > 0 && (
                         <div className="flex gap-2 flex-wrap mb-4">
-                          {project.data.technologies.slice(0, 4).map((tech: any, idx: number) => (
+                          {project.data.technologies.slice(0, 4).map((tech, idx: number) => (
                             <Badge key={idx} variant="secondary" className="text-xs">
                               {tech.name}
                             </Badge>

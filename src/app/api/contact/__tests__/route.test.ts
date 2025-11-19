@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { POST } from '../route'
 import { NextRequest } from 'next/server'
-import { checkRateLimit, getClientIP } from '@/lib/rate-limit'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { submitContactForm } from '@/lib/supabase'
 
 // Mock dependencies

@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const client = createClient()
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const project = await client.getByUID('project' as any, uid) as unknown as ProjectDocument
     const descriptionText = project.data.description?.[0] && 'text' in project.data.description[0]
       ? project.data.description[0].text
@@ -44,6 +45,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   let project: ProjectDocument | null = null
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     project = await client.getByUID('project' as any, uid) as unknown as ProjectDocument
   } catch {
     notFound()
@@ -82,7 +84,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             {/* Technologies */}
             {data.technologies && data.technologies.length > 0 && (
               <div className="flex gap-2 flex-wrap mb-6">
-                {data.technologies.map((tech: any, idx: number) => (
+                {data.technologies.map((tech, idx: number) => (
                   <Badge key={idx} variant="secondary" className="text-sm">
                     {tech.name}
                   </Badge>
@@ -181,7 +183,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <h2 className="text-2xl font-bold mb-6">Gallery</h2>
               <ScrollStagger staggerDelay={0.1}>
                 <div className="grid gap-4 md:grid-cols-2">
-                  {data.gallery.map((item: any, idx: number) => (
+                  {data.gallery.map((item, idx: number) => (
                     item.image?.url && (
                       <div key={idx} className="rounded-lg overflow-hidden shadow-lg ring-1 ring-border hover:shadow-xl transition-shadow duration-300">
                         <img
@@ -210,7 +212,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <h2 className="text-2xl font-bold mb-6">Additional Videos</h2>
               <ScrollStagger staggerDelay={0.1}>
                 <div className="space-y-6">
-                  {data.additionalVideos.map((video: any, idx: number) => (
+                  {data.additionalVideos.map((video, idx: number) => (
                     <Card key={idx} className="p-4 shadow-lg">
                       {video.videoTitle && (
                         <h3 className="text-xl font-semibold mb-2">{video.videoTitle}</h3>
@@ -262,6 +264,7 @@ export async function generateStaticParams() {
   const client = createClient()
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const projects = await client.getAllByType('project' as any)
     return projects.map((project) => ({
       uid: project.uid,

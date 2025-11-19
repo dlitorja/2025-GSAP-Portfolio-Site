@@ -179,7 +179,7 @@ describe('ContactForm', () => {
   })
 
   it('should show loading state during submission', async () => {
-    let resolvePromise: (value: any) => void
+    let resolvePromise: (value: Response) => void
     const mockFetch = vi.fn().mockImplementation(
       () => new Promise(resolve => {
         resolvePromise = resolve

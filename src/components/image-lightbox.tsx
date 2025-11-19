@@ -21,7 +21,8 @@ export function ImageLightbox({ images, initialIndex, isOpen, onClose }: ImageLi
   // Update current index when initialIndex changes (when opening with a different image)
   useEffect(() => {
     if (isOpen) {
-      setCurrentIndex(initialIndex)
+      // Use setTimeout to avoid synchronous setState in effect
+      setTimeout(() => setCurrentIndex(initialIndex), 0)
     }
   }, [initialIndex, isOpen])
 

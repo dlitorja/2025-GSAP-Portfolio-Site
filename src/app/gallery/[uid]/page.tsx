@@ -10,7 +10,7 @@ import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { GalleryImages } from '@/components/gallery-images'
-import { ArrowLeft, Calendar, MapPin, Play, Image as ImageIcon } from 'lucide-react'
+import { ArrowLeft, Calendar, MapPin } from 'lucide-react'
 import { GalleryDocument } from '@/types/prismic'
 import * as prismic from '@prismicio/client'
 
@@ -78,12 +78,12 @@ export default async function GalleryItemPage({ params }: GalleryPageProps) {
       }
       
       galleryArray.forEach((galleryItem: GalleryItem) => {
-        const image = galleryItem.image || galleryItem.galleryImage || (galleryItem as unknown as prismic.ImageField)
+        const image = galleryItem.image
         if (image && 'url' in image && image.url) {
-          const captionValue = galleryItem.caption || galleryItem.imageCaption
+          const captionValue = galleryItem.caption
           images.push({
             url: image.url,
-            alt: image.alt || galleryItem.caption || galleryItem.imageCaption || data.title || 'Gallery image',
+            alt: image.alt || (galleryItem.caption ? String(galleryItem.caption) : undefined) || data.title || 'Gallery image',
             caption: captionValue ? String(captionValue) : undefined,
           })
         }

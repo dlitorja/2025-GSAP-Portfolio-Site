@@ -30,14 +30,15 @@ export default function PhotosPage() {
     async function fetchPhotos() {
       try {
         const client = createClient()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const galleryItems = await client.getAllByType('gallery' as any, {
           orderings: [{ field: 'my.gallery.date', direction: 'desc' }],
         })
 
         const extractedPhotos: PhotoItem[] = []
         
-        galleryItems.forEach((item: any) => {
-          const itemData = item.data as GalleryDocument['data']
+        galleryItems.forEach((item) => {
+          const itemData = item.data as unknown as GalleryDocument['data']
           const mediaType = (itemData.mediaType as string) || 'Single Image'
           
           // Track if we found images for this item
@@ -49,17 +50,17 @@ export default function PhotosPage() {
               ? itemData.imageGallery 
               : [itemData.imageGallery]
             
-            galleryArray.forEach((galleryItem: any, idx: number) => {
-              const image = galleryItem.image || galleryItem.galleryImage || galleryItem
+            galleryArray.forEach((galleryItem, idx: number) => {
+              const image = galleryItem.image
               if (image?.url) {
                 extractedPhotos.push({
                   id: `${item.id}-gallery-${idx}`,
                   url: image.url,
-                  alt: image.alt || galleryItem.caption || galleryItem.imageCaption || itemData.title || `Gallery photo ${idx + 1}`,
+                  alt: image.alt || (galleryItem.caption ? String(galleryItem.caption) : undefined) || itemData.title || `Gallery photo ${idx + 1}`,
                   galleryItemId: item.id,
-                  galleryItemUid: item.uid,
+                  galleryItemUid: item.uid || '',
                   galleryItemTitle: itemData.title || 'Untitled',
-                  caption: galleryItem.caption || galleryItem.imageCaption,
+                  caption: galleryItem.caption ? String(galleryItem.caption) : undefined,
                 })
                 itemPhotosFound++
               }
@@ -73,7 +74,7 @@ export default function PhotosPage() {
               url: itemData.singleImage.url,
               alt: itemData.singleImage.alt || itemData.title || 'Gallery photo',
               galleryItemId: item.id,
-              galleryItemUid: item.uid,
+              galleryItemUid: item.uid || '',
               galleryItemTitle: itemData.title || 'Untitled',
             })
             itemPhotosFound++
@@ -86,16 +87,17 @@ export default function PhotosPage() {
               url: itemData.featuredImage.url,
               alt: itemData.featuredImage.alt || itemData.title || 'Gallery photo',
               galleryItemId: item.id,
-              galleryItemUid: item.uid,
+              galleryItemUid: item.uid || '',
               galleryItemTitle: itemData.title || 'Untitled',
             })
           }
         })
         
         setPhotos(extractedPhotos)
-      } catch (error: any) {
-        const isNotFoundError = error?.name === 'NotFoundError' || 
-                               error?.message?.includes('No documents were returned')
+      } catch (error: unknown) {
+        const isNotFoundError = (error && typeof error === 'object' && 'name' in error && error.name === 'NotFoundError') ||
+                               (error && typeof error === 'object' && 'message' in error && 
+                                typeof error.message === 'string' && error.message.includes('No documents were returned'))
         if (!isNotFoundError) {
           console.error('Error fetching gallery items from Prismic:', error)
         }

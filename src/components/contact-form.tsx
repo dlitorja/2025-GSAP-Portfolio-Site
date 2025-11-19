@@ -90,7 +90,7 @@ export function ContactForm() {
         <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
         <p className="text-muted-foreground mb-6">
-          Thanks for reaching out. I'll get back to you soon!
+          Thanks for reaching out. I&apos;ll get back to you soon!
         </p>
         <Button onClick={() => setSubmitStatus('idle')} variant="outline">
           Send Another Message

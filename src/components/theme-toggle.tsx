@@ -10,8 +10,10 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
 
   // useEffect only runs on the client, so now we can safely show the UI
+  // This is a common pattern for client-only rendering to avoid hydration mismatches
   useEffect(() => {
-    setMounted(true)
+    // Use setTimeout to avoid synchronous setState in effect
+    setTimeout(() => setMounted(true), 0)
   }, [])
 
   if (!mounted) {

@@ -45,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic routes - Projects
   let projectRoutes: MetadataRoute.Sitemap = []
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const projects = await client.getAllByType('project' as any)
     projectRoutes = projects.map((project) => ({
       url: `${baseUrl}/projects/${project.uid}`,
@@ -59,6 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic routes - Blog Posts
   let blogRoutes: MetadataRoute.Sitemap = []
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const posts = await client.getAllByType('blog_post' as any)
     blogRoutes = posts.map((post) => ({
       url: `${baseUrl}/blog/${post.uid}`,

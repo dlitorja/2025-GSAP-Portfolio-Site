@@ -12,10 +12,11 @@ export default async function Home() {
   
   try {
     siteSettings = await client.getSingle('site_settings') as unknown as SiteSettingsDocument
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
+    const isNotFoundError = (error && typeof error === 'object' && 'name' in error && error.name === 'NotFoundError') ||
+                           (error && typeof error === 'object' && 'message' in error && 
+                            typeof error.message === 'string' && error.message.includes('No documents were returned'))
     if (!isNotFoundError) {
       console.error('Failed to fetch site settings:', error)
     }

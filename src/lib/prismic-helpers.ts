@@ -20,10 +20,11 @@ export async function getSiteSettings(): Promise<SiteSettingsDocument | null> {
     // Type assertion - Prismic returns a different type structure than our custom interface
     // Using unknown first to safely cast to our custom type
     return document as unknown as SiteSettingsDocument
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Only log actual errors, not "not found" cases (which are expected when content isn't set up)
-    const isNotFoundError = error?.name === 'NotFoundError' || 
-                           error?.message?.includes('No documents were returned')
+    const isNotFoundError = (error && typeof error === 'object' && 'name' in error && error.name === 'NotFoundError') ||
+                           (error && typeof error === 'object' && 'message' in error && 
+                            typeof error.message === 'string' && error.message.includes('No documents were returned'))
     if (!isNotFoundError) {
       console.error('Failed to fetch site settings:', error)
     }
@@ -46,7 +47,12 @@ export function getPrismicLinkUrl(linkField: prismic.LinkField | undefined): str
 export function getPrismicRichText(richTextField: prismic.RichTextField | undefined): string {
   if (!richTextField || !Array.isArray(richTextField)) return ''
   return richTextField
-    .map((block: any) => block.text || '')
+    .map((block) => {
+      if (block && typeof block === 'object' && 'text' in block && typeof block.text === 'string') {
+        return block.text
+      }
+      return ''
+    })
     .join(' ')
     .trim()
 }

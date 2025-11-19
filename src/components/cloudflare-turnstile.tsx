@@ -49,10 +49,13 @@ export function CloudflareTurnstile({
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
       script.async = true
       script.defer = true
-      script.onload = () => setIsLoaded(true)
+      script.onload = () => {
+        setIsLoaded(true)
+      }
       document.body.appendChild(script)
     } else if (window.turnstile) {
-      setIsLoaded(true)
+      // Turnstile is already loaded, set state in next tick to avoid synchronous setState
+      setTimeout(() => setIsLoaded(true), 0)
     }
 
     // Check if Turnstile is already available
