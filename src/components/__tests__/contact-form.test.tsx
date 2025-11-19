@@ -212,7 +212,7 @@ describe('ContactForm', () => {
       resolvePromise!({
         ok: true,
         json: async () => ({ message: 'Success' }),
-      })
+      } as Response)
     })
 
     await waitFor(() => {
