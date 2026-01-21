@@ -45,10 +45,13 @@ export function AnimatedHero({
     // Function to prepare buttons/socials for animation
     // CSS classes already hide them, we just need to remove the class and set GSAP properties
     const prepareButtonsAndSocials = () => {
-      if (buttonsRef.current && buttonsRef.current.children.length > 0) {
-        // Remove CSS hiding class and set GSAP initial state
-        buttonsRef.current.classList.remove('hero-buttons-hidden')
-        gsap.set(buttonsRef.current.children, { opacity: 0, scale: 0.8, y: 20, visibility: 'visible' })
+      if (buttonsRef.current) {
+        const magneticButtons = buttonsRef.current.querySelectorAll('.magnetic-btn')
+        if (magneticButtons.length > 0) {
+          // Remove CSS hiding class and set GSAP initial state
+          buttonsRef.current.classList.remove('hero-buttons-hidden')
+          gsap.set(magneticButtons, { opacity: 0, scale: 0.8, y: 20, visibility: 'visible' })
+        }
       }
       if (socialsRef.current && socialsRef.current.children.length > 0) {
         // Remove CSS hiding class and set GSAP initial state
@@ -165,21 +168,24 @@ export function AnimatedHero({
           }
           
           // Animate buttons with scale and stagger
-          if (buttonsRef.current && buttonsRef.current.children.length > 0) {
-            // Ensure initial state is set right before animating
-            prepareButtonsAndSocials()
-            tl.to(
-              buttonsRef.current.children,
-              {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'back.out(1.4)',
-              },
-              '-=0.4'
-            )
+          if (buttonsRef.current) {
+            const magneticButtons = buttonsRef.current.querySelectorAll('.magnetic-btn')
+            if (magneticButtons.length > 0) {
+              // Ensure initial state is set right before animating
+              prepareButtonsAndSocials()
+              tl.to(
+                magneticButtons,
+                {
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                  duration: 0.6,
+                  stagger: 0.1,
+                  ease: 'back.out(1.4)',
+                },
+                '-=0.4'
+              )
+            }
           }
           
           // Animate social icons with rotation
@@ -203,10 +209,10 @@ export function AnimatedHero({
             // Fallback: ensure buttons and socials are visible even if animation didn't run
             // This handles edge cases where children weren't ready
             setTimeout(() => {
-              if (buttonsRef.current && buttonsRef.current.children.length > 0) {
-                const buttons = Array.from(buttonsRef.current.children) as HTMLElement[]
-                buttons.forEach(btn => {
-                  const computedStyle = window.getComputedStyle(btn)
+              if (buttonsRef.current) {
+                const magneticButtons = buttonsRef.current.querySelectorAll('.magnetic-btn')
+                magneticButtons.forEach(btn => {
+                  const computedStyle = window.getComputedStyle(btn as HTMLElement)
                   if (computedStyle.opacity === '0' || computedStyle.opacity === '') {
                     gsap.to(btn, { opacity: 1, scale: 1, y: 0, duration: 0.3 })
                   }
@@ -275,26 +281,26 @@ export function AnimatedHero({
         >
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <MagneticButton strength={0.2}>
-              <Button asChild size="lg" className="text-lg">
+              <Button asChild size="lg" className="text-lg magnetic-btn">
                 <Link href="/projects">View My Work</Link>
               </Button>
             </MagneticButton>
             <MagneticButton strength={0.2}>
-              <Button asChild size="lg" className="text-lg">
+              <Button asChild size="lg" className="text-lg magnetic-btn">
                 <Link href="/gallery">
                   My Content
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                 </Link>
               </Button>
             </MagneticButton>
             <MagneticButton strength={0.2}>
-              <Button asChild size="lg" className="text-lg">
+              <Button asChild size="lg" className="text-lg magnetic-btn">
                 <Link href="/contact">Get In Touch</Link>
               </Button>
             </MagneticButton>
           </div>
           <MagneticButton strength={0.2}>
-            <Button asChild size="lg" className="text-lg">
+            <Button asChild size="lg" className="text-lg magnetic-btn">
               <Link href="/about">About Me</Link>
             </Button>
           </MagneticButton>
