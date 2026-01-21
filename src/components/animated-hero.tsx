@@ -271,24 +271,31 @@ export function AnimatedHero({
 
         <div
           ref={buttonsRef}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center hero-buttons-hidden"
+          className="flex flex-col gap-4 justify-center items-center hero-buttons-hidden"
         >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <MagneticButton strength={0.2}>
+              <Button asChild size="lg" className="text-lg">
+                <Link href="/projects">View My Work</Link>
+              </Button>
+            </MagneticButton>
+            <MagneticButton strength={0.2}>
+              <Button asChild size="lg" className="text-lg">
+                <Link href="/gallery">
+                  My Content
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </MagneticButton>
+            <MagneticButton strength={0.2}>
+              <Button asChild size="lg" className="text-lg">
+                <Link href="/contact">Get In Touch</Link>
+              </Button>
+            </MagneticButton>
+          </div>
           <MagneticButton strength={0.2}>
             <Button asChild size="lg" className="text-lg">
-              <Link href="/gallery">My Content</Link>
-            </Button>
-          </MagneticButton>
-          <MagneticButton strength={0.2}>
-            <Button asChild size="lg" className="text-lg">
-              <Link href="/projects">
-                View My Work
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </MagneticButton>
-          <MagneticButton strength={0.2}>
-            <Button asChild size="lg" className="text-lg">
-              <Link href="/contact">Get In Touch</Link>
+              <Link href="/about">About Me</Link>
             </Button>
           </MagneticButton>
         </div>
